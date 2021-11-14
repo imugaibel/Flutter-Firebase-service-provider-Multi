@@ -1,7 +1,7 @@
 - 👋 Hi, I’m @MeshariS
 
 - 📫 How to reach me ...
-- You Youtube
+- Youtube
 https://www.youtube.com/channel/UCpDXRpPGPYgrlYU54623xlw
 
 - source code
