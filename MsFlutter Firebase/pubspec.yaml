@@ -1,0 +1,42 @@
+name: maintenance
+description: A Ms Flutter Firebase.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_storage:
+  cloud_firestore:
+  firebase_auth: 1.4.1
+  cupertino_icons: ^1.0.2
+  shared_preferences:
+  flutter_svg:
+  google_maps_flutter:
+  carousel_slider:
+  image_picker:
+  uuid:
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/languages/
+    - assets/images/
+    - assets/images/icons/
+
+  fonts:
+    - family: NeoSansArabic
+      fonts:
+        - asset: assets/fonts/NeoSansArabic.ttf
