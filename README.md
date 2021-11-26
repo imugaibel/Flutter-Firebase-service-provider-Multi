@@ -1,5 +1,5 @@
 - 👋 Hi, I’m @MeshariS
-- 📫 HFlutter Firebase Google Maps
+- 📫 Flutter Firebase Google Maps
 
 - Youtube
 https://www.youtube.com/channel/UCpDXRpPGPYgrlYU54623xlw
