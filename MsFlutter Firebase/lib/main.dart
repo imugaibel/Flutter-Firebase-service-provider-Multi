@@ -26,6 +26,8 @@ import 'package:maintenance/widgets/choose-user-type.dart';
 import 'package:maintenance/screen/service-form.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'Front/Front.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -94,6 +96,8 @@ class _MyAppState extends State<MyApp> {
             return MaterialPageRoute(builder: (_) => Splash());
           case '/Wrapper':
             return MaterialPageRoute(builder: (_) => Wrapper());
+            case '/Front':
+            return MaterialPageRoute(builder: (_) => Front());
           case '/SelectLanguage':
             return MaterialPageRoute(builder: (_) => SelectLanguage());
           case '/SignIn':

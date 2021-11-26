@@ -474,7 +474,7 @@ class FirebaseManager {
     try {
 
       try {
- //     await FirebaseFirestore.instance.terminate();
+        await FirebaseFirestore.instance.terminate();
         await FirebaseFirestore.instance.clearPersistence();
       } catch (e) {
 
@@ -562,7 +562,7 @@ class FirebaseManager {
       await FirebaseAuth.instance.signOut();
       await UserProfile.shared.setUser(user: null);
       showLoaderDialog(context, isShowLoader: false);
-      Navigator.pushNamedAndRemoveUntil(context, "/SignIn", (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, "/Front", (route) => false);
     } catch (_) {
       showLoaderDialog(context, isShowLoader: false);
     }

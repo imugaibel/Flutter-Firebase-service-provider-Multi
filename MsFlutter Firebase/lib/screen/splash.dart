@@ -50,14 +50,14 @@ class _SplashState extends State<Splash> {
 
       FirebaseManager.shared.getUserByUid(uid: user.uid).then((user) {
         if (user.accountStatus == Status.ACTIVE) {
-          Navigator.of(context).pushNamedAndRemoveUntil("/Tabbar", (route) => false, arguments: user.userType);
+          Navigator.of(context).pushNamedAndRemoveUntil("/Front", (route) => false, arguments: user.userType);
         } else {
-          Navigator.of(context).pushNamedAndRemoveUntil("/SignIn", (route) => false);
+          Navigator.of(context).pushNamedAndRemoveUntil("/Front", (route) => false);
         }
       });
 
     } else {
-      Navigator.of(context).pushNamedAndRemoveUntil("/SignIn", (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil("/Front", (route) => false);
     }
 
   }

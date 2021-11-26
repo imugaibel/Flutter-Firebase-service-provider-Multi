@@ -272,6 +272,31 @@ class _UsersState extends State<Users> {
                     SizedBox(width: 20,),
                   ],
                 ),
+              ),              Visibility(
+                visible: status == Status.PENDING,
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        FirebaseManager.shared.changeStatusAccount(scaffoldKey: _scaffoldKey, userId: user.uid, status: Status.Rejected);
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        height: MediaQuery.of(context).size.height * (50 / 812),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        child: Center(
+                            child: Text(
+                                AppLocalization.of(context).translate("Rejected"),
+                              style: TextStyle(color: Colors.white, fontSize: 18),
+                            )),
+                      ),
+                    ),
+                    SizedBox(width: 20,),
+                  ],
+                ),
               ),
               Visibility(
                 visible: status == Status.Disable,
@@ -331,7 +356,7 @@ class _UsersState extends State<Users> {
                 ),
               ),
               Visibility(
-                visible: false,
+                visible: status == Status.Disable,
                 child: Row(
                   children: [
                     InkWell(

@@ -190,17 +190,6 @@ class _SignInState extends State<SignIn> {
                         ),
                       )
                   ),
-                  FlatButton(
-                      onPressed: () => Navigator.pushNamed(context, '/SelectLanguage'),
-                      child: Text(
-                          AppLocalization.of(context).translate("SelectLanguage"),
-                        style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                  ),
                 ],
               ),
             ],
