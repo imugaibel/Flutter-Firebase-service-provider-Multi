@@ -17,6 +17,7 @@ class MyOrder extends StatefulWidget {
 }
 
 class _MyOrderState extends State<MyOrder> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   Language lang = Language.ENGLISH;
 
@@ -34,6 +35,7 @@ class _MyOrderState extends State<MyOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(AppLocalization.of(context).translate("My Order")),
         centerTitle: true,
@@ -84,6 +86,10 @@ class _MyOrderState extends State<MyOrder> {
       case Status.Finished:
         statusTitle = AppLocalization.of(context).translate("Finished");
         statusIcon = Icon(Icons.check, size: 22, color: Colors.green,);
+        break;
+        case Status.canceled:
+        statusTitle = AppLocalization.of(context).translate("canceled");
+        statusIcon = Icon(Icons.check, size: 22, color: Colors.orangeAccent,);
         break;
     }
 
@@ -145,6 +151,39 @@ class _MyOrderState extends State<MyOrder> {
                   ],
                 ),
                 SizedBox(height: 15),
+                Visibility(
+                  visible: order.status == Status.ACTIVE,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              FirebaseManager.shared.changeOrderStatus(_scaffoldKey.currentContext, uid: order.uid, status: Status.canceled);
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              height: MediaQuery.of(context).size.height * (50 / 812),
+                              decoration: BoxDecoration(
+                                color: Colors.orangeAccent,
+                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                              ),
+
+                              child: Center(
+                                  child: Text(
+                                    AppLocalization.of(context).translate("cancelle"),
+                                    style: TextStyle(color: Colors.white, fontSize: 18),
+                                  )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
@@ -161,14 +200,9 @@ class _MyOrderState extends State<MyOrder> {
                         Text(statusTitle, style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor),),
                       ],
                     ),
+
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(height: 10),
-      ],
-    );
+              ])))]);
   }
 }

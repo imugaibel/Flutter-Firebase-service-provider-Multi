@@ -163,7 +163,7 @@ class _EditProfileState extends State<EditProfile> {
                         future: UserProfile.shared.getUser(),
                         builder: (context, snapshot) {
                           return Visibility(
-                            visible: snapshot.hasData ? snapshot.data.userType == UserType.TECHNICIAN : false ,
+                            visible: snapshot.hasData ? snapshot.data.userType == UserType.TECHNICIAN :true,
                             child: Column(
                               children: [
                                 SizedBox(height: 20),
@@ -187,11 +187,12 @@ class _EditProfileState extends State<EditProfile> {
                         }
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height * (100 / 812)),
-                      Container(
-                        width: double.infinity,
-                        height: MediaQuery.of(context).size.height * ( 55 / 812 ),
-                        child: customButton(context, title: AppLocalization.of(context).translate("Edit Profile"), onPressed: () => _btnEdit(imgURL: user.image)),
-                      ),
+                      RaisedButton(
+                          color: Theme.of(context).accentColor,
+                          child: Text(AppLocalization.of(context).translate("Edit Profile"),
+                              style: TextStyle(color:  Theme.of(context).scaffoldBackgroundColor,fontWeight: FontWeight.bold,
+                                fontSize: 20,)),
+                          onPressed: () => _btnEdit(imgURL: user.image)),
                       SizedBox(height: 20,),
                     ],
                   ),

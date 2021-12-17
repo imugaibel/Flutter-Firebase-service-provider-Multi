@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'EXPmodel.dart';
+
 
 
 
@@ -10,7 +12,7 @@ class EXP extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-       //   SliderEXP(),
+          EXPMODEL(),
         ],
       ),
     );

@@ -1,5 +1,14 @@
 {
   "All Services": "All Services",
+  "No services Deleted yet": "No services Deleted yet",
+  "No services Disable yet": "No services Disable yet",
+  "No services Rejected yet": "No services Rejected yet",
+  "Deleted": "Deleted",
+  "cancelle": "cancelle",
+  "canceled": "canceled",
+  "Customer name: ": "Customer name: ",
+  "Tech name: ": "Service provider name: ",
+
   "SelectLanguage": "Select Language",
   "No services yet": "No services yet",
   "Delete": "Delete",
@@ -204,7 +213,7 @@
   "Your account has been successfully created Your account is under review": "Your account has been successfully created Your account is under review",
   "Wallet": "Wallet",
   "Your balance is:": "Your balance is:",
-  "RAS": "RAS",
+  "RAS": "SAR",
   "User ID: ": "User ID: ",
   "Edit Balance": "Edit Balance",
   "User balance: ": "User balance: ",

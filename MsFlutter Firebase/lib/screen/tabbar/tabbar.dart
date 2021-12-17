@@ -11,6 +11,9 @@ import 'package:maintenance/screen/tabbar/home-admin.dart';
 import 'package:maintenance/screen/tabbar/users.dart';
 import 'package:maintenance/utils/app_localization.dart';
 
+import 'all-service-hidden.dart';
+import 'allhiddenstat.dart';
+
 class TabBarItem {
 
   final IconData icon;
@@ -44,8 +47,13 @@ class _TabBarPageState extends State<TabBarPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     switch (widget.userType) {
+      case UserType.Hidden:
+        tabItems = [];
+        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "All Services", AllServicehidden()));
+        tabItems.add(TabBarItem(Icons.supervised_user_circle_sharp, "Users", allhiddenstart()));
+        tabItems.add(TabBarItem(Icons.person, "Profile", Profile()));
+        break;
       case UserType.ADMIN:
         tabItems = [];
         tabItems.add(TabBarItem(Icons.home, "Home", HomeAdmin()));
@@ -67,7 +75,6 @@ class _TabBarPageState extends State<TabBarPage> {
         tabItems.add(TabBarItem(Icons.sticky_note_2_sharp, "My Orders", MyOrder()));
         tabItems.add(TabBarItem(Icons.person, "Profile", Profile()));
     }
-
   }
 
   @override

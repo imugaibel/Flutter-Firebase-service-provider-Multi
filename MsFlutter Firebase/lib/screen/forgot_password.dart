@@ -30,15 +30,19 @@ class ForgotPassword extends StatelessWidget {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              Column(
-                children: [
+          Center(
+          child: Container(
+          constraints: BoxConstraints(
+            maxWidth: 400,
+          ),
+          child: Column(
+            children: [
                   SizedBox(height: MediaQuery.of(context).size.height * (40 / 812)),
                   Image.asset(Assets.shared.icLogo, fit: BoxFit.cover, height: MediaQuery.of(context).size.height * (250 / 812),),
                   SizedBox(height: 20),
                   Text(AppLocalization.of(context).translate("Forgot Password"), style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 26,
-                    fontWeight: FontWeight.bold,
                   ),),
                   SizedBox(height: 50,),
                   Form(
@@ -71,6 +75,8 @@ class ForgotPassword extends StatelessWidget {
                   ),
                 ],
               ),
+             )
+          )
             ],
           ),
         ),

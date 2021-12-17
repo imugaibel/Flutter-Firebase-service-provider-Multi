@@ -51,7 +51,11 @@ class _SignupState extends State<Signup> {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              SingleChildScrollView(
+          Center(
+          child: Container(
+          constraints: BoxConstraints(
+            maxWidth: 400,
+          ),
                 child: Column(
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height * (60 / 812)),
@@ -204,7 +208,7 @@ class _SignupState extends State<Signup> {
               //       ),
               //     )
               // ),
-            ],
+          )],
           ),
         ),
       ),

@@ -65,11 +65,12 @@ class EditPassword extends StatelessWidget {
                       ).copyWith(hintText: AppLocalization.of(context).translate("Confirm password")),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * (100 / 812)),
-                    Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * ( 55 / 812 ),
-                      child: customButton(context, title: AppLocalization.of(context).translate("Change password"), onPressed: () => _btnChange(context)),
-                    ),
+                    RaisedButton(
+                        color: Theme.of(context).accentColor,
+                        child: Text(AppLocalization.of(context).translate("Change password"),
+                            style: TextStyle(color:  Theme.of(context).scaffoldBackgroundColor,fontWeight: FontWeight.bold,
+                              fontSize: 20,)),
+                        onPressed: () => _btnChange(context)),
                     SizedBox(height: 20,),
                   ],
                 ),

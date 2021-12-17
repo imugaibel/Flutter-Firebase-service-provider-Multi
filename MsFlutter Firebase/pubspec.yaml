@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   firebase_storage:
   cloud_firestore:
   firebase_auth: ^3.2.0
@@ -21,6 +22,10 @@ dependencies:
   carousel_slider:
   image_picker:
   uuid:
+  google_sign_in: "^4.5.1"
+  sign_in_with_apple: ^2.5.2
+  crypto: ^2.1.5
+
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0

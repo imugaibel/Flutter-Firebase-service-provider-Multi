@@ -19,7 +19,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  List<ProfileList> items = [ProfileList.ABOUT_US, ProfileList.CHANGE_LANGUAGE, ProfileList.EDIT_PROFILE, ProfileList.EDIT_PASSWORD, ProfileList.WALLET, ProfileList.ORDERS, ProfileList.PRIVACY_TERMS, ProfileList.CONTACT_US, ProfileList.LOGOUT];
+  List<ProfileList> items = [ProfileList.ABOUT_US, ProfileList.CHANGE_LANGUAGE, ProfileList.EDIT_PROFILE, ProfileList.EDIT_PASSWORD, ProfileList.WALLET, ProfileList.ORDERS,ProfileList.AllOrdershidden, ProfileList.PRIVACY_TERMS, ProfileList.CONTACT_US, ProfileList.LOGOUT];
 
   Future<UserModel> user = UserProfile.shared.getUser();
 
@@ -30,6 +30,9 @@ class _ProfileState extends State<Profile> {
     user.then((value) {
       if (value.userType != UserType.ADMIN) {
         items.remove(ProfileList.ORDERS);
+      }
+      if (value.userType != UserType.Hidden) {
+        items.remove(ProfileList.AllOrdershidden);
       }
     });
   }
@@ -80,7 +83,7 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Text(user.name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Theme.of(context).primaryColor,),),
                           SizedBox(height: 5),
-                          Text(user.userType == UserType.ADMIN ? AppLocalization.of(context).translate("admin") : user.userType == UserType.TECHNICIAN ? AppLocalization.of(context).translate("technician") : AppLocalization.of(context).translate("user"), style: TextStyle(fontSize: 16),),
+                          Text(user.userType == UserType.Hidden ? AppLocalization.of(context).translate("admin") : user.userType == UserType.ADMIN ? AppLocalization.of(context).translate("admin") : user.userType == UserType.TECHNICIAN ? AppLocalization.of(context).translate("technician") : AppLocalization.of(context).translate("user"), style: TextStyle(fontSize: 16),),
                         ],
                       ),
                     ],
@@ -133,6 +136,10 @@ class _ProfileState extends State<Profile> {
       case ProfileList.ORDERS:
         title = "Orders";
         screen = "/Orders";
+        break;
+        case ProfileList.AllOrdershidden:
+        title = "Orders";
+        screen = "/AllOrdershidden";
         break;
       case ProfileList.PRIVACY_TERMS:
         title = "Privacy Terms";

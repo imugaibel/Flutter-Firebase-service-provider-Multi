@@ -5,4 +5,5 @@ enum Status {
   Deleted,
   Finished,
   Disable,
+  canceled,
 }

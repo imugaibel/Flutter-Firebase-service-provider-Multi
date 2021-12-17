@@ -7,6 +7,7 @@ import 'package:maintenance/model/user-model.dart';
 import 'package:maintenance/utils/app_localization.dart';
 import 'package:maintenance/utils/firebase-manager.dart';
 import 'package:maintenance/utils/user_profile.dart';
+import 'package:maintenance/widgets/comment_dialog.dart';
 import 'package:maintenance/widgets/loader.dart';
 import 'package:maintenance/utils/extensions.dart';
 import 'package:maintenance/widgets/notifications.dart';
@@ -164,9 +165,7 @@ class _RequestServicesState extends State<RequestServices> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {
-                              FirebaseManager.shared.changeOrderStatus(_scaffoldKey.currentContext, uid: item.uid, status: Status.Rejected);
-                            },
+                              onTap: () => _btnReject(uid: item.uid),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.3,
                               height: MediaQuery.of(context).size.height * (50 / 812),
@@ -194,8 +193,30 @@ class _RequestServicesState extends State<RequestServices> {
         } else {
           return SizedBox();
         }
+      });
+  }
 
-      }
-    );
+  _btnReject({@required String uid}) {
+    commentDialog(context,
+        titleBtn: AppLocalization.of(context).translate("Reject"),
+        action: (commentEN, commentAR) async {
+          if (commentEN == "" || commentAR == "") {
+            _scaffoldKey.showTosta(
+                message: AppLocalization.of(context)
+                    .translate("Please fill in all fields"),
+                isError: true);
+            return;
+          } else {
+            Navigator.of(context).pop();
+
+            FirebaseManager.shared.changeOrderStatus(
+              _scaffoldKey.currentContext,
+              uid: uid,
+              status: Status.Rejected,
+              messageEN: commentEN,
+              messageAR: commentAR,
+            );
+          }
+        });
   }
 }

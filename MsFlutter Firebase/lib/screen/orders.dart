@@ -148,6 +148,23 @@ class _OrdersState extends State<Orders> {
                     Text(AppLocalization.of(context).translate("rejected")),
                   ],
                 ),
+                  Row(
+                  children: [
+                  Row(
+                    children: [
+                    Radio(
+                    activeColor: Theme.of(context).primaryColor,
+                    value: Status.canceled,
+                    groupValue: status,
+                    onChanged: (Status value) {
+                    setState(() {
+                    status = value;
+                    });
+                    },
+                    ),
+                    Text(AppLocalization.of(context).translate("canceled")),
+                    ],
+    ),
                 Row(
                   children: [
                     Radio(
@@ -171,7 +188,7 @@ class _OrdersState extends State<Orders> {
         Container(height: 1, color: Theme.of(context).primaryColor,),
         SizedBox(height: 20),
       ],
-    );
+    )]);
   }
 
   Widget _item(context, { @required OrderModel order }) {
@@ -191,6 +208,10 @@ class _OrdersState extends State<Orders> {
       case Status.Rejected:
         statusTitle = AppLocalization.of(context).translate("Rejected");
         statusIcon = Icon(Icons.report, size: 22, color: Colors.red,);
+        break;
+        case Status.canceled:
+        statusTitle = AppLocalization.of(context).translate("canceled");
+        statusIcon = Icon(Icons.report, size: 22, color: Colors.orangeAccent,);
         break;
       case Status.Finished:
         statusTitle = AppLocalization.of(context).translate("Finished");
@@ -250,9 +271,61 @@ class _OrdersState extends State<Orders> {
                 SizedBox(height: 15),
                 Row(
                   children: [
-                    Text(AppLocalization.of(context).translate("Date: "), style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),),
+                    Text(
+                      AppLocalization.of(context).translate("Tech name: "),
+                      style: TextStyle(
+                          fontSize: 18, color: Theme.of(context).primaryColor),
+                    ),
                     SizedBox(width: 10),
-                    Text(order.createdDate.changeDateFormat(), style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor),),
+                    FutureBuilder<UserModel>(
+                        future: FirebaseManager.shared
+                            .getUserByUid(uid: order.ownerId),
+                        builder: (context, snapshot) {
+                          return Text(
+                            snapshot.hasData ? snapshot.data.name : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).accentColor),
+                          );
+                        }),
+                  ],
+                ),
+                SizedBox(height: 15),
+                Row(
+                  children: [
+                    Text(
+                      AppLocalization.of(context).translate("Customer name: "),
+                      style: TextStyle(
+                          fontSize: 18, color: Theme.of(context).primaryColor),
+                    ),
+                    SizedBox(width: 10),
+                    FutureBuilder<UserModel>(
+                        future: FirebaseManager.shared
+                            .getUserByUid(uid: order.userId),
+                        builder: (context, snapshot) {
+                          return Text(
+                            snapshot.hasData ? snapshot.data.name : "",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).accentColor),
+                          );
+                        }),
+                  ],
+                ),
+                SizedBox(height: 15),
+                Row(
+                  children: [
+                    Text(
+                      AppLocalization.of(context).translate("Date: "),
+                      style: TextStyle(
+                          fontSize: 18, color: Theme.of(context).primaryColor),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      order.createdDate.changeDateFormat(),
+                      style: TextStyle(
+                          fontSize: 16, color: Theme.of(context).accentColor),
+                    ),
                   ],
                 ),
                 SizedBox(height: 15),
@@ -269,7 +342,12 @@ class _OrdersState extends State<Orders> {
                       children: [
                         statusIcon,
                         SizedBox(width: 10),
-                        Text(statusTitle, style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor),),
+                        Text(
+                          statusTitle,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).accentColor),
+                        ),
                       ],
                     ),
                   ),
@@ -283,3 +361,4 @@ class _OrdersState extends State<Orders> {
     );
   }
 }
+

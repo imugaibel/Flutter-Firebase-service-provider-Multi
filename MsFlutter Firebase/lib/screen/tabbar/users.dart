@@ -117,6 +117,7 @@ class _UsersState extends State<Users> {
                 Text(AppLocalization.of(context).translate("pending")),
               ],
             ),
+
             Row(
               children: [
                 Radio(

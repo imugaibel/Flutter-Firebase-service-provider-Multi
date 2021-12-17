@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maintenance/screen/about-us.dart';
+import 'package:maintenance/screen/login.dart';
 import 'package:maintenance/screen/orders.dart';
 import 'package:maintenance/screen/appointment-booking.dart';
 import 'package:maintenance/screen/contact-us.dart';
@@ -17,6 +18,7 @@ import 'package:maintenance/screen/service-details.dart';
 import 'package:maintenance/screen/signin.dart';
 import 'package:maintenance/screen/signup.dart';
 import 'package:maintenance/screen/splash.dart';
+import 'package:maintenance/screen/tabbar/all-order-hidden.dart';
 import 'package:maintenance/screen/tabbar/tabbar.dart';
 import 'package:maintenance/screen/wallet.dart';
 import 'package:maintenance/screen/wrapper.dart';
@@ -100,16 +102,18 @@ class _MyAppState extends State<MyApp> {
             return MaterialPageRoute(builder: (_) => Front());
           case '/SelectLanguage':
             return MaterialPageRoute(builder: (_) => SelectLanguage());
-          case '/SignIn':
-            return MaterialPageRoute(builder: (_) => SignIn(message: arguments,));
+ //         case '/SignIn':
+//            return MaterialPageRoute(builder: (_) => SignIn(message: arguments,));
           case '/SignUp':
             return MaterialPageRoute(builder: (_) => Signup());
           case '/ForgotPassword':
             return MaterialPageRoute(builder: (_) => ForgotPassword());
-          case '/Tabbar':
+          case '/login':
+            return MaterialPageRoute(builder: (_) => login(userType: arguments,));
+            case '/Tabbar':
             return MaterialPageRoute(builder: (_) => TabBarPage(userType: arguments,));
           case '/ChooseUserType':
-            return MaterialPageRoute(builder: (_) => ChooseUserType());
+            return MaterialPageRoute(builder: (_) => ChooseUserType(message: arguments,));
           case '/ServiceDetails':
             return MaterialPageRoute(builder: (_) => ServiceDetails(udidService: arguments,));
           case '/AppointmentBooking':
@@ -136,6 +140,8 @@ class _MyAppState extends State<MyApp> {
             return MaterialPageRoute(builder: (_) => Notifications());
           case '/Wallet':
             return MaterialPageRoute(builder: (_) => Wallet());
+            case '/AllOrdershidden':
+            return MaterialPageRoute(builder: (_) => AllOrdershidden());
           case '/Orders':
             return MaterialPageRoute(builder: (_) => Orders());
           default:

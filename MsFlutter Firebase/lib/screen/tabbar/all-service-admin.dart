@@ -20,34 +20,30 @@ class AllServiceAdmin extends StatelessWidget {
         centerTitle: true,
       ),
       body: StreamBuilder<List<ServiceModel>>(
-        stream: FirebaseManager.shared.getServices(status: Status.ACTIVE),
-        builder: (context, snapshot) {
-
-          if (snapshot.hasData) {
-
-            List<ServiceModel> items = snapshot.data;
-
-            return (items == null || items.length == 0) ? Center(child: Text(AppLocalization.of(context).translate("No services yet"), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18),),) : ListView.builder(
-              padding: EdgeInsets.all(20),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return ServiceCell(service: items[index], isShowBtnOne: false, titleBtnOne: "", titleBtnTwo: AppLocalization.of(context).translate("Delete"), actionBtnOne: () {
-
-                }, actionBtnTwo: () {
-                  showAlertDialog(context, title: AppLocalization.of(context).translate("Delete Service"), message: AppLocalization.of(context).translate("Are you sure to delete the service?"), titleBtnOne: "Delete", titleBtnTwo: "Close", actionBtnOne: () {
-                    Navigator.of(context).pop();
-                    FirebaseManager.shared.deleteService(_scaffoldKey.currentContext, idService: items[index].uid);
+          stream: FirebaseManager.shared.getServices(status: Status.ACTIVE),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<ServiceModel> items = snapshot.data;
+              return (items == null || items.length == 0) ? Center(child: Text(AppLocalization.of(context).translate("No services yet"), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18),),) : ListView.builder(
+                padding: EdgeInsets.all(20),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return ServiceCell(service: items[index], isShowBtnOne: true, titleBtnOne: AppLocalization.of(context).translate("disabled"), titleBtnTwo: AppLocalization.of(context).translate("Delete"), actionBtnOne: () {
+                    FirebaseManager.shared.changeServiceStatus(_scaffoldKey.currentContext, service: items[index], status: Status.Disable);
                   }, actionBtnTwo: () {
-                    Navigator.of(context).pop();
-                  });
-                },);
-              },
-            );
-          } else {
-            return Center(child: loader(context));
+                    showAlertDialog(context, title: AppLocalization.of(context).translate("Delete Service"), message: AppLocalization.of(context).translate("Are you sure to delete the service?"), titleBtnOne: "Delete", titleBtnTwo: "Close", actionBtnOne: () {
+                      Navigator.of(context).pop();
+                      FirebaseManager.shared.changeServiceStatus(_scaffoldKey.currentContext, service: items[index], status: Status.Deleted);
+                    }, actionBtnTwo: () {
+                      Navigator.of(context).pop();
+                    });
+                  },);
+                },
+              );
+            } else {
+              return Center(child: loader(context));
+            }
           }
-
-        }
       ),
     );
   }

@@ -1,5 +1,11 @@
 {
   "SelectLanguage": "تحديد اللغه",
+  "No services Deleted yet": "لا يوجد خدمات محذوفه",
+  "No services Disable yet": "لا يوجد خدمات معطله",
+  "No services Rejected yet": "لا يوجد خدمات مرفوضله",
+  "Deleted": "محذوف",
+  "Customer name: ": "اسم الزبون: ",
+  "Tech name: ": "اسم مقدم الخدمه: ",
 
   "All Services": "جميع الخدمات",
   "No services yet": "لا يوجد خدمات بعد",
@@ -226,5 +232,7 @@
   "Account created successfully, Your account in now under review": "تم إنشاء الحساب بنجاح. حسابك الآن قيد المراجعة",
   "Attach a Picture": "إرفاق صورة",
   "photo attached": "تم إرفاق صورة",
-  "The attached photo:-": "الصورة المرفقة:-"
+  "The attached photo:-": "الصورة المرفقة:-",
+  "cancelle": "الغاء",
+  "canceled": "ملغي"
 }

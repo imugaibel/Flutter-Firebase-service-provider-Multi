@@ -1,6 +1,8 @@
-import 'dart:io';
+/*import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:maintenance/enums/user-type.dart';
 import 'package:maintenance/styles/input_style.dart';
 import 'package:maintenance/utils/app_localization.dart';
 import 'package:maintenance/utils/assets.dart';
@@ -10,24 +12,18 @@ import 'package:maintenance/widgets/custom_button.dart';
 import 'package:maintenance/utils/extensions.dart';
 
 class SignIn extends StatefulWidget {
-
   final String message;
-
-  const SignIn({Key key, this.message}) : super(key: key);
-
+  final UserType userType;
+  const SignIn({Key key, this.message, this.userType}) : super(key: key);
   @override
   _SignInState createState() => _SignInState();
 }
-
 class _SignInState extends State<SignIn> {
-
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   GlobalKey<FormState> _formKey = GlobalKey();
-
   String email;
   String password;
   bool isShowPassword = false;
-
   @override
   void initState() {
     // TODO: implement initState
@@ -39,16 +35,21 @@ class _SignInState extends State<SignIn> {
         });
       });
     }
-
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        leading:  IconButton(
+          icon: Icon(
+              Icons.arrow_back,
+            color: Theme.of(context).primaryColor,
+          ),
+          onPressed: () => Navigator.pushNamed(context, '/Front'),
+        ),
+        backgroundColor: Theme.of(context).canvasColor,
+      elevation: 0,
         iconTheme: IconThemeData(
           color: Theme.of(context).primaryColor,
         ),
@@ -59,7 +60,12 @@ class _SignInState extends State<SignIn> {
           width: double.infinity,
           child: Column(
             children: [
-              Column(
+          Center(
+          child: Container(
+          constraints: BoxConstraints(
+            maxWidth: 400,
+          ),
+              child: Column(
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * (60 / 812)),
                   Image.asset(Assets.shared.icLogo, fit: BoxFit.cover, height: MediaQuery.of(context).size.height * (250 / 812),),
@@ -132,10 +138,10 @@ class _SignInState extends State<SignIn> {
                           ],
                         ),
                         Visibility(
-                          visible: false,
+                          visible: widget.userType != UserType.USER,
                           child: Column(
                             children: [
-                              SizedBox(height: MediaQuery.of(context).size.height * (150 / 812)),
+                              SizedBox(height: 20,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
@@ -148,7 +154,7 @@ class _SignInState extends State<SignIn> {
                                       child: IconButton(icon: SvgPicture.asset(Assets.shared.icGoogle, width: 50, height: 50,), tooltip: AppLocalization.of(context).translate("Sign in with Google"), onPressed: _btnSigninWithGoogle),
                                   ),
                                   Visibility(
-                                    visible: false,
+                                    visible:(kIsWeb || Platform.isMacOS != Platform.isIOS),
                                     child: Container(
                                         padding: EdgeInsets.all(10),
                                         decoration: BoxDecoration(
@@ -158,40 +164,34 @@ class _SignInState extends State<SignIn> {
                                         child: IconButton(icon: SvgPicture.asset(Assets.shared.icApple, width: 50, height: 50,), tooltip: AppLocalization.of(context).translate("Sign in with Apple"), onPressed: _btnSigninWithApple)
                                     ),
                                   ),
-                                  Container(
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor.withOpacity(0.1),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: IconButton(icon: SvgPicture.asset(Assets.shared.icTwitter, width: 50, height: 50,), tooltip: AppLocalization.of(context).translate("Sign in with Twitter"), onPressed: _btnSigninWithTwitter),
-                                  ),
                                 ],
                               ),
                             ],
                           ),
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(height: 20),
+                            FlatButton(
+                                onPressed: () => Navigator.pushNamed(context, '/SignUp'),
+                                child: Text(
+                                  AppLocalization.of(context).translate("Create new account"),
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              Column(
-                children: [
-                  SizedBox(height: 20),
-                  FlatButton(
-                      onPressed: () => Navigator.pushNamed(context, '/SignUp'),
-                      child: Text(
-                          AppLocalization.of(context).translate("Create new account"),
-                        style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                  ),
-                ],
-              ),
+        )
+          )
             ],
           ),
         ),
@@ -216,37 +216,11 @@ class _SignInState extends State<SignIn> {
   }
 
   _btnSigninWithGoogle() {
-    // FirebaseManager.shared.signInWithGoogle(scaffoldKey: _scaffoldKey, userType: widget.userType);
-  }
-
-  _btnSigninWithTwitter() {
-    // FirebaseManager.shared.signInWithTwitter(scaffoldKey: _scaffoldKey, userType: widget.userType);
+    FirebaseManager.shared.signInWithGoogle(scaffoldKey: _scaffoldKey, userType: widget.userType);
   }
 
   _btnSigninWithApple() {
-    // FirebaseManager.shared.signInWithApple(scaffoldKey: _scaffoldKey, userType: widget.userType);
+     FirebaseManager.shared.signInWithApple(scaffoldKey: _scaffoldKey, userType: widget.userType);
   }
 
-  // _payment() async {
-  //   var request = BraintreeDropInRequest(
-  //     tokenizationKey: "",
-  //     collectDeviceData: true,
-  //     paypalRequest: BraintreePayPalRequest(
-  //       amount: "10.00",
-  //       displayName: "name",
-  //     ),
-  //     cardEnabled: true,
-  //   );
-  //
-  //   BraintreeDropInResult result = await BraintreeDropIn.start(request);
-  //
-  //   if (result != null) {
-  //     print("===================");
-  //     print(result.paymentMethodNonce.description);
-  //     print(result.paymentMethodNonce.nonce);
-  //     print("===================");
-  //   }
-  //
-  // }
-
-}
+}*/

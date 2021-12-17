@@ -32,9 +32,7 @@ class _FrontState extends State<Front> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Ms"),
-
           centerTitle: true,
-
           leading:  IconButton(
           icon: Icon(
           Icons.language,
@@ -48,7 +46,7 @@ class _FrontState extends State<Front> {
           //ProfileScreen
           // ignore: deprecated_member_use
           child:  FlatButton(
-          onPressed: () => Navigator.pushNamed(context, '/Wrapper'),
+          onPressed: () => Navigator.pushNamed(context, '/ChooseUserType'),
 
           child: Icon(
           Icons.person_rounded,

@@ -13,11 +13,8 @@ class ALLService extends StatefulWidget {
   @override
   _ALLServiceState createState() => _ALLServiceState();
 }
-
 class _ALLServiceState extends State<ALLService> {
-
   Language lang = Language.ENGLISH;
-
   @override
   void initState() {
     // TODO: implement initState
@@ -28,10 +25,7 @@ class _ALLServiceState extends State<ALLService> {
       });
     });
   }
-
   @override
-
-
   Widget build(BuildContext context) {
     return StreamBuilder<List<ServiceModel>>(
         stream: FirebaseManager.shared.getServices(status: Status.ACTIVE),

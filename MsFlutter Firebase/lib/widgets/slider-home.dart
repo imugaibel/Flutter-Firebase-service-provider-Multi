@@ -33,9 +33,7 @@ class SliderHome extends StatelessWidget {
             return FutureBuilder<UserModel>(
               future: UserProfile.shared.getUser(),
               builder: (context, snapshot) {
-
                 if (snapshot.hasData) {
-
                   return CarouselSlider(
                     options: CarouselOptions(
                       height: MediaQuery.of(context).size.height * (380 / 812),
@@ -45,9 +43,7 @@ class SliderHome extends StatelessWidget {
                     ),
                     items: sliderCells(snapshot.data.userType, data),
                   );
-
                 }
-
                 return SizedBox();
               }
             );
