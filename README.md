@@ -1,8 +1,5 @@
- Multi merchant app from  Ms
+ Multi merchant 
 
- The app update every Month.
-Get started with Ms
-https://ms-free-flutter.firebaseapp.com
 
 
 We use
@@ -14,8 +11,6 @@ Installation instructions
 Edit Firebase 
 Edit Key Google Maps 
 Start Your work
-//Flutter 2.2.3
-https://www.youtube.com/channel/UCpDXRpPGPYgrlYU54623xlw
 
 ## Getting Started
 This project Ms is a starting point for a Flutter application.
