@@ -148,15 +148,15 @@ class _SignupState extends State<Signup> {
                           TextFormField(
                             controller: _userTypeController,
                             onTap: () {
-                              alertSheet(context, title: AppLocalization.of(context).translate("User type"), items: [AppLocalization.of(context).translate("User"), AppLocalization.of(context).translate("Technician"), AppLocalization.of(context).translate("Admin")], onTap: (value) {
+                              alertSheet(context, title: AppLocalization.of(context).translate("User type"), items: [AppLocalization.of(context).translate("User"), AppLocalization.of(context).translate("Technician")], onTap: (value) {
                                 _userTypeController.text = value;
-                                if (value == AppLocalization.of(context).translate("admin")) {
-                                  userType = UserType.ADMIN;
-                                } else if (value == AppLocalization.of(context).translate("Technician")){
+
+                                if (value == AppLocalization.of(context).translate("Technician")) {
                                   userType = UserType.TECHNICIAN;
-                                }else{
+                                } else {
                                   userType = UserType.USER;
                                 }
+
                                 return;
                               });
                             },

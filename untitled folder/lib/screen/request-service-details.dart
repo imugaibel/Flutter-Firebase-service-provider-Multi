@@ -30,7 +30,7 @@ class RequestServiceDetails extends StatelessWidget {
               children: [
                 Text(AppLocalization.of(context).translate("Phone: "), style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),),
                 SizedBox(width: 10),
-                Text("+9727676380", style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor)),
+                Text("+966", style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor)),
               ],
             ),
             SizedBox(height: 15),

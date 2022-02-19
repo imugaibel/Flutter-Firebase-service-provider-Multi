@@ -20,7 +20,7 @@ class ContactUs extends StatelessWidget {
             SizedBox(height: 30),
             Text(AppLocalization.of(context).translate("You can contact us via through the following email:-"), style: TextStyle(color: Theme.of(context).accentColor, fontSize: 22, height: 1.8), textAlign: TextAlign.center,),
             SizedBox(height: 30),
-            Text("+966550444844", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 26, height: 1.8), textAlign: TextAlign.center,),
+            Text("+966", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 26, height: 1.8), textAlign: TextAlign.center,),
           ],
         ),
       ),
