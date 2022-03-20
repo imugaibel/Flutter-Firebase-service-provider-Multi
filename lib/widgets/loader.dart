@@ -30,11 +30,11 @@ loader(context) {
   return Container(
       width: MediaQuery.of(context).size.width * (100 / 375),
       height: MediaQuery.of(context).size.width * (100 / 375),
-      padding: EdgeInsets.all(25),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(25),
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      child: CircularProgressIndicator()
+      child: const CircularProgressIndicator()
   );
 }

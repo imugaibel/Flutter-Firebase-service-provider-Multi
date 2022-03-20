@@ -4,7 +4,6 @@ enum ProfileList {
   EDIT_PROFILE,
   EDIT_PASSWORD,
   WALLET,
-  AllOrdershidden,
   ORDERS,
   PRIVACY_TERMS,
   CONTACT_US,

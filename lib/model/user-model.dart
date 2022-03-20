@@ -9,19 +9,19 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
   UserModel({
-    this.id,
-    this.image,
-    this.name,
-    this.phone,
-    this.email,
-    this.city,
-    this.uid,
-    this.accountStatus,
-    this.userType,
-    this.balance,
-    this.lat,
-    this.lng,
-    this.dateCreated,
+    required this.id,
+    required this.image,
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.city,
+    required this.uid,
+    required this.accountStatus,
+    required this.userType,
+    required this.balance,
+    required this.lat,
+    required this.lng,
+    required this.dateCreated,
   });
 
   String id;
@@ -38,8 +38,8 @@ class UserModel {
   double lng;
   String dateCreated;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json["id"],
+  factory UserModel.fromJson(Map<String, dynamic>? json) => UserModel(
+    id: json!["id"],
     image: json["image"],
     name: json["name"],
     phone: json["phone"],

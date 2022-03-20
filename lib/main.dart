@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maintenance/screen/about-us.dart';
-import 'package:maintenance/screen/login.dart';
-import 'package:maintenance/screen/orders.dart';
 import 'package:maintenance/screen/appointment-booking.dart';
 import 'package:maintenance/screen/contact-us.dart';
 import 'package:maintenance/screen/edit-password.dart';
@@ -11,43 +13,74 @@ import 'package:maintenance/screen/edit-profile.dart';
 import 'package:maintenance/screen/forgot_password.dart';
 import 'package:maintenance/screen/notification.dart';
 import 'package:maintenance/screen/order-details.dart';
+import 'package:maintenance/screen/orders.dart';
 import 'package:maintenance/screen/privacy-terms.dart';
 import 'package:maintenance/screen/request-service-details.dart';
 import 'package:maintenance/screen/select-location.dart';
-import 'package:maintenance/screen/select_language.dart';
 import 'package:maintenance/screen/service-details.dart';
+import 'package:maintenance/screen/service-form.dart';
 import 'package:maintenance/screen/signin.dart';
 import 'package:maintenance/screen/signup.dart';
 import 'package:maintenance/screen/splash.dart';
-import 'package:maintenance/screen/tabbar/all-order-hidden.dart';
 import 'package:maintenance/screen/tabbar/tabbar.dart';
 import 'package:maintenance/screen/wallet.dart';
 import 'package:maintenance/screen/wrapper.dart';
 import 'package:maintenance/utils/app_localization.dart';
+import 'package:maintenance/utils/assets.dart';
 import 'package:maintenance/utils/extensions.dart';
 import 'package:maintenance/widgets/choose-user-type.dart';
-import 'package:maintenance/screen/service-form.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'manger/init.dart'
+if (dart.library.html) 'manger/web_init.dart'
+if (dart.library.io) 'manger/io_init.dart';
 
-import 'Front/Front.dart';
 
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    description:  'This channel is used for important notifications.', // description
+    importance: Importance.high,
+    playSound: true);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  if (kDebugMode) {
+    print('A bg message just showed up :  ${message.messageId}');
+  }
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //await initializeFirebase();
   await Firebase.initializeApp().then((_) {
     FirebaseFirestore.instance.settings =
-    const Settings(persistenceEnabled: false);
+        const Settings(persistenceEnabled: false);
   });
-  runApp( MyApp());
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  runApp(const MyApp());
 }
 
-
-
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   static void setLocale(BuildContext context, Locale locale) {
-    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
-    state.setLocale(locale);
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state!.setLocale(locale);
   }
 
   @override
@@ -55,8 +88,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  Locale _locale;
+  Locale? _locale;
 
   void setLocale(Locale locale) {
     setState(() {
@@ -65,16 +97,65 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    Firebase.initializeApp();
-    return MaterialApp(
-      title: "Ms",
-      debugShowCheckedModeBanner: false,
-      locale:_locale,
-      supportedLocales: [
-        Locale("ar"),
-        Locale("en", "US"),
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
+  //  FirebaseMessaging.instance.subscribeToTopic("all");
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              color: Colors.blue,
+              playSound: true,
+              icon: Assets.shared.icAccentLogo,
+            ),
+          ),
+        );
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text(notification.title!),
+              content: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text(notification.body!)],
+                ),
+              ),
+            );
+          },
+        );
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "maintenance",
+      debugShowCheckedModeBanner: false,
+      locale: _locale,
+      supportedLocales: const [
+        Locale("en", "US"),
+        Locale("ar"),
       ],
       localizationsDelegates: [
         AppLocalization.delegate,
@@ -84,18 +165,16 @@ class _MyAppState extends State<MyApp> {
       ],
       localeListResolutionCallback: (deviceLocale, supportedLocales) {
         for (var local in supportedLocales) {
-          if (local.languageCode == deviceLocale[0].languageCode) {
+          if (local.languageCode == deviceLocale![0].languageCode) {
             return local;
           }
         }
         return supportedLocales.first;
       },
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        canvasColor: Colors.white,
-        primaryColor:  Colors.blue,
-        accentColor: Colors.blue,
-        backgroundColor: Colors.white,
+        primaryColor: "#0093c9".toHexa(),
+        accentColor: "#6c757d".toHexa(),
+        backgroundColor: "#ffffff".toHexa(),
         fontFamily: 'NeoSansArabic',
       ),
       initialRoute: "/Splash",
@@ -103,55 +182,64 @@ class _MyAppState extends State<MyApp> {
         final arguments = settings.arguments;
         switch (settings.name) {
           case '/Splash':
-            return MaterialPageRoute(builder: (_) => Splash());
+            return MaterialPageRoute(builder: (_) => const Splash());
           case '/Wrapper':
-            return MaterialPageRoute(builder: (_) => Wrapper());
-            case '/Front':
-            return MaterialPageRoute(builder: (_) => Front());
-          case '/SelectLanguage':
-            return MaterialPageRoute(builder: (_) => SelectLanguage());
- //         case '/SignIn':
-//            return MaterialPageRoute(builder: (_) => SignIn(message: arguments,));
+            return MaterialPageRoute(builder: (_) => const Wrapper());
+     //     case '/SelectLanguage':
+      //      return MaterialPageRoute(builder: (_) => SelectLanguage());
+          case '/SignIn':
+            return MaterialPageRoute(
+                builder: (_) => SignIn(
+                      message: arguments,
+                    ));
           case '/SignUp':
-            return MaterialPageRoute(builder: (_) => Signup());
+            return MaterialPageRoute(builder: (_) => const Signup());
           case '/ForgotPassword':
             return MaterialPageRoute(builder: (_) => ForgotPassword());
-          case '/login':
-            return MaterialPageRoute(builder: (_) => login(userType: arguments,));
-            case '/Tabbar':
-            return MaterialPageRoute(builder: (_) => TabBarPage(userType: arguments,));
+          case '/Tabbar':
+            return MaterialPageRoute(
+                builder: (_) => TabBarPage(
+                      userType: arguments,
+                    ));
           case '/ChooseUserType':
-            return MaterialPageRoute(builder: (_) => ChooseUserType(message: arguments,));
+            return MaterialPageRoute(builder: (_) => ChooseUserType());
           case '/ServiceDetails':
             return MaterialPageRoute(builder: (_) => ServiceDetails(udidService: arguments,));
           case '/AppointmentBooking':
-            return MaterialPageRoute(builder: (_) => AppointmentBooking(uidActiveService: arguments,));
+            return MaterialPageRoute(
+                builder: (_) => const AppointmentBooking(
+             //     uidActiveService: arguments,
+                ));
           case '/SelectLocation':
-            return MaterialPageRoute(builder: (_) => SelectLocation());
+            return MaterialPageRoute(builder: (_) =>  const SelectLocation());
           case '/ServiceForm':
-            return MaterialPageRoute(builder: (_) => ServiceForm(uidService: arguments,));
+            return MaterialPageRoute(
+                builder: (_) => ServiceForm(
+               //       uidService: arguments,
+                    ));
           case '/RequestServiceDetails':
             return MaterialPageRoute(builder: (_) => RequestServiceDetails());
           case '/AboutUs':
-            return MaterialPageRoute(builder: (_) => AboutUs());
+            return MaterialPageRoute(builder: (_) => const AboutUs());
           case '/EditProfile':
-            return MaterialPageRoute(builder: (_) => EditProfile());
+            return MaterialPageRoute(builder: (_) => const EditProfile());
           case '/EditPassword':
             return MaterialPageRoute(builder: (_) => EditPassword());
           case '/PrivacyTerms':
-            return MaterialPageRoute(builder: (_) => PrivacyTerms());
+            return MaterialPageRoute(builder: (_) => const PrivacyTerms());
           case '/ContactUs':
-            return MaterialPageRoute(builder: (_) => ContactUs());
+            return MaterialPageRoute(builder: (_) => const ContactUs());
           case '/OrderDetails':
-            return MaterialPageRoute(builder: (_) => OrderDetails(order: arguments,));
+            return MaterialPageRoute(
+                builder: (_) => OrderDetails(
+                      order: arguments,
+                    ));
           case '/Notification':
-            return MaterialPageRoute(builder: (_) => Notifications());
+            return MaterialPageRoute(builder: (_) => const Notifications());
           case '/Wallet':
-            return MaterialPageRoute(builder: (_) => Wallet());
-            case '/AllOrdershidden':
-            return MaterialPageRoute(builder: (_) => AllOrdershidden());
+            return MaterialPageRoute(builder: (_) => const Wallet());
           case '/Orders':
-            return MaterialPageRoute(builder: (_) => Orders());
+            return MaterialPageRoute(builder: (_) => const Orders());
           default:
             return null;
         }

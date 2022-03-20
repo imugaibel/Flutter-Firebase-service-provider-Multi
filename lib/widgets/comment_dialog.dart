@@ -4,8 +4,7 @@ import 'package:maintenance/utils/app_localization.dart';
 
 import 'btn-main.dart';
 
-commentDialog(context, { @required String titleBtn, @required Function action }) {
-
+commentDialog(context, {required String titleBtn, action}) {
   String commentEN = "";
   String commentAR = "";
 
@@ -17,21 +16,24 @@ commentDialog(context, { @required String titleBtn, @required Function action })
           TextField(
             onChanged: (value) => commentEN = value.trim(),
             decoration: InputDecoration(
-                hintText: AppLocalization.of(context).translate("write comment EN")
-            ),
+                hintText:
+                    AppLocalization.of(context)!.translate("write comment EN")),
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           TextField(
             onChanged: (value) => commentAR = value.trim(),
             decoration: InputDecoration(
-                hintText: AppLocalization.of(context).translate("write comment AR")
-            ),
+                hintText:
+                    AppLocalization.of(context)!.translate("write comment AR")),
           ),
           Expanded(child: SizedBox()),
           Container(
               height: MediaQuery.of(context).size.height * (40 / 812),
               child: BtnMain(title: titleBtn, onTap: () => action(commentEN, commentAR),)
           ),
+
         ],
       ),
     ),
@@ -43,5 +45,4 @@ commentDialog(context, { @required String titleBtn, @required Function action })
       return alert;
     },
   );
-
 }

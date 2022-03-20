@@ -8,6 +8,8 @@ import 'package:maintenance/utils/firebase-manager.dart';
 import 'package:maintenance/utils/user_profile.dart';
 
 class Splash extends StatefulWidget {
+  const Splash({Key? key}) : super(key: key);
+
   @override
   _SplashState createState() => _SplashState();
 }
@@ -18,7 +20,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       _wrapper();
     });
   }
@@ -26,14 +28,12 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Center(
-          child: Image.asset(Assets.shared.icLogo, width: 225, height: 225, fit: BoxFit.cover,),
-        ),
+      body: Center(
+        child: Image.asset(Assets.shared.icLogo, width: 225, height: 225, fit: BoxFit.cover,),
       ),
-      bottomNavigationBar: Padding(
+      bottomNavigationBar: const Padding(
         padding: EdgeInsets.only(bottom: 20),
-        child: Text("Ms", textAlign: TextAlign.center, style: TextStyle(color:Theme.of(context).accentColor,fontSize: 18),),
+        child: Text("omni", textAlign: TextAlign.center, style: TextStyle(fontSize: 18),),
       ),
     );
   }
@@ -44,20 +44,20 @@ class _SplashState extends State<Splash> {
       MyApp.setLocale(context, Locale(lang == Language.ARABIC ? "ar" : "en"));
     });
 
-    UserModel user = await UserProfile.shared.getUser();
+    UserModel? user = await UserProfile.shared.getUser();
 
     if (user != null) {
 
       FirebaseManager.shared.getUserByUid(uid: user.uid).then((user) {
         if (user.accountStatus == Status.ACTIVE) {
-          Navigator.of(context).pushNamedAndRemoveUntil("/Wrapper", (route) => false, arguments: user.userType);
+          Navigator.of(context).pushNamedAndRemoveUntil("/Tabbar", (route) => false, arguments: user.userType);
         } else {
-          Navigator.of(context).pushNamedAndRemoveUntil("/Front", (route) => false);
+          Navigator.of(context).pushNamedAndRemoveUntil("/SignIn", (route) => false);
         }
       });
 
     } else {
-      Navigator.of(context).pushNamedAndRemoveUntil("/Front", (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil("/SignIn", (route) => false);
     }
 
   }

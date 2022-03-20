@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,9 +8,12 @@ import 'package:maintenance/utils/app_localization.dart';
 import 'package:maintenance/utils/firebase-manager.dart';
 import 'package:maintenance/utils/user_profile.dart';
 import 'package:maintenance/widgets/loader.dart';
+
 import 'alert.dart';
 
 class SliderHome extends StatelessWidget {
+  const SliderHome({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +23,20 @@ class SliderHome extends StatelessWidget {
 
           if (snapshot.hasData) {
 
-            List<AdsModel> data = snapshot.data;
+            List<AdsModel>? data = snapshot.data;
 
             List<String> images = [];
 
-            for (var item in data) {
+            for (var item in data!) {
               images.add(item.image);
             }
 
-            return FutureBuilder<UserModel>(
+            return FutureBuilder<UserModel?>(
               future: UserProfile.shared.getUser(),
               builder: (context, snapshot) {
+
                 if (snapshot.hasData) {
+
                   return CarouselSlider(
                     options: CarouselOptions(
                       height: MediaQuery.of(context).size.height * (380 / 812),
@@ -41,10 +44,12 @@ class SliderHome extends StatelessWidget {
                       autoPlay: true,
                       viewportFraction: 1,
                     ),
-                    items: sliderCells(snapshot.data.userType, data),
+                    items: sliderCells(snapshot.data!.userType, data),
                   );
+
                 }
-                return SizedBox();
+
+                return const SizedBox();
               }
             );
           } else {
@@ -72,13 +77,12 @@ class SliderHome extends StatelessWidget {
         items.add(Builder(
           builder: (BuildContext context) {
             return InkWell(
-              onTap: () {
-
+              onTap: () async {
                 if (userType != UserType.ADMIN) {
                   return;
                 }
 
-                showAlertDialog(context, title: AppLocalization.of(context).translate("Delete Image"), message: AppLocalization.of(context).translate("Are you sure to delete the image?"), titleBtnOne: AppLocalization.of(context).translate("Delete"), titleBtnTwo: AppLocalization.of(context).translate("Close"), actionBtnOne: () {
+                showAlertDialog(context, title: AppLocalization.of(context)!.translate("Delete Image"), message: AppLocalization.of(context)!.translate("Are you sure to delete the image?"), titleBtnOne: AppLocalization.of(context)!.translate("Delete"), titleBtnTwo: AppLocalization.of(context)!.translate("Close"), actionBtnOne: () {
                   _deleteImage(context, ads[i].uid);
                   Navigator.of(context).pop();
                 }, actionBtnTwo: () {
@@ -88,7 +92,7 @@ class SliderHome extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
                 ),
                 child: Image.network(ads[i].image, fit: BoxFit.cover,),
@@ -107,7 +111,7 @@ class SliderHome extends StatelessWidget {
       onTap: () => _getImage(context),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
           border: Border.all(color: Theme.of(context).primaryColor),
         ),
         child: Center(
@@ -121,34 +125,32 @@ class SliderHome extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc){
-          return Container(
-            child: Wrap(
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.camera_alt, color: Theme.of(context).primaryColor,),
-                  title: Text(AppLocalization.of(context).translate('Camera'), style: TextStyle(color: Theme.of(context).primaryColor),),
-                  onTap: () => _selectImage(context, imageSource: ImageSource.camera),
-                ),
-                ListTile(
-                  leading: Icon(Icons.image, color: Theme.of(context).primaryColor,),
-                  title: Text(AppLocalization.of(context).translate('Gallery'), style: TextStyle(color: Theme.of(context).primaryColor),),
-                  onTap: () => _selectImage(context, imageSource: ImageSource.gallery),
-                ),
-              ],
-            ),
+          return Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.camera_alt, color: Theme.of(context).primaryColor,),
+                title: Text(AppLocalization.of(context)!.translate('Camera'), style: TextStyle(color: Theme.of(context).primaryColor),),
+                onTap: () => _selectImage(context, imageSource: ImageSource.camera),
+              ),
+              ListTile(
+                leading: Icon(Icons.image, color: Theme.of(context).primaryColor,),
+                title: Text(AppLocalization.of(context)!.translate('Gallery'), style: TextStyle(color: Theme.of(context).primaryColor),),
+                onTap: () => _selectImage(context, imageSource: ImageSource.gallery),
+              ),
+            ],
           );
         }
     );
 
   }
 
-  _selectImage(context, {@required ImageSource imageSource}) async {
-    PickedFile image = await ImagePicker.platform.pickImage(
+  _selectImage(context, {required ImageSource imageSource}) async {
+    PickedFile? image = await ImagePicker.platform.pickImage(
         source: imageSource);
 
     Navigator.of(context).pop();
 
-    FirebaseManager.shared.addAds(context, image: image.path);
+    FirebaseManager.shared.addAds(context, image: image!.path);
   }
 
   _deleteImage(context, String idAds) {

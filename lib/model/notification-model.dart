@@ -4,14 +4,14 @@ NotificationModel notificationModelFromJson(String str) => NotificationModel.fro
 
 class NotificationModel {
   NotificationModel({
-    this.userId,
-    this.titleEn,
-    this.titleAr,
-    this.detailsEn,
-    this.detailsAr,
-    this.createdDate,
-    this.uid,
-    this.isRead,
+    required this.userId,
+    required this.titleEn,
+    required this.titleAr,
+    required this.detailsEn,
+    required this.detailsAr,
+    required this.createdDate,
+    required this.uid,
+    required this.isRead,
   });
 
   String userId;

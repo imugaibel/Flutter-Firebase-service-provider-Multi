@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maintenance/enums/language.dart';
 import 'package:maintenance/enums/user-type.dart';
 import 'package:maintenance/model/service-model.dart';
 import 'package:maintenance/model/user-model.dart';
+import 'package:maintenance/screen/service-form.dart';
 import 'package:maintenance/utils/app_localization.dart';
 import 'package:maintenance/utils/firebase-manager.dart';
 import 'package:maintenance/utils/user_profile.dart';
@@ -13,9 +13,9 @@ import 'package:maintenance/widgets/loader.dart';
 
 class ServiceDetails extends StatefulWidget {
 
-  final String udidService;
+  final  udidService;
 
-  const ServiceDetails({Key key, this.udidService}) : super(key: key);
+  const ServiceDetails({Key? key, this.udidService}) : super(key: key);
 
   @override
   _ServiceDetailsState createState() => _ServiceDetailsState();
@@ -30,21 +30,24 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     // TODO: implement initState
     super.initState();
     UserProfile.shared.getLanguage().then((value) {
-      setState(() {
-        lang = value;
-      });
+      if (value != null) {
+        setState(() {
+          lang = value;
+        });
+      }
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<UserModel>(
+    return FutureBuilder<UserModel?>(
       future: UserProfile.shared.getUser(),
       builder: (context, snapshot) {
 
         if (snapshot.hasData) {
 
-          UserModel user = snapshot.data;
+          UserModel? user = snapshot.data;
 
           return Scaffold(
             body: StreamBuilder<ServiceModel>(
@@ -53,18 +56,18 @@ class _ServiceDetailsState extends State<ServiceDetails> {
 
                 if (snapshot.hasData) {
 
-                  ServiceModel service = snapshot.data;
+                  ServiceModel? service = snapshot.data;
 
                   return CustomScrollView(
                     slivers: <Widget>[
                       SliverAppBar(
                         leading: IconButton(
-                          icon: Icon(Icons.arrow_back),
-                          tooltip: AppLocalization.of(context).translate("Back"),
+                          icon: const Icon(Icons.arrow_back),
+                          tooltip: AppLocalization.of(context)!.translate("Back"),
                           onPressed: () => Navigator.of(context).pop(),
                         ),
                         actions: [
-                          Visibility(visible: user.userType == UserType.TECHNICIAN, child: IconButton(icon: Icon(Icons.edit, color: Colors.white,), tooltip: AppLocalization.of(context).translate("Edit Service"), onPressed: () => Navigator.of(context).pushNamed("/ServiceForm", arguments: widget.udidService))),
+                          Visibility(visible: user!.userType == UserType.TECHNICIAN, child: IconButton(icon: const Icon(Icons.edit, color: Colors.white,), tooltip: AppLocalization.of(context)!.translate("Edit Service"), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ServiceForm(udidService: service))),)),
                         ],
                         expandedHeight: MediaQuery.of(context).size.height * (350 / 812),
                         floating: true,
@@ -73,8 +76,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                         elevation: 5,
                         flexibleSpace: FlexibleSpaceBar(
                           centerTitle: true,
-                          title: Text(lang == Language.ARABIC ? service.titleAR : service.titleEN,
-                              style: TextStyle(
+                          title: Text(lang == Language.ARABIC ? service!.titleAR : service!.titleEN,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
                               )),
@@ -84,15 +87,15 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                       SliverList(
                         delegate: SliverChildListDelegate([
                           Padding(
-                            padding: EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(20),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(AppLocalization.of(context).translate("Info:-"), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 22, fontWeight: FontWeight.w500),),
-                                SizedBox(height: 10),
-                                Text(lang == Language.ARABIC ? service.detailsAR : service.detailsAR, style: TextStyle(color: Colors.blueGrey, fontSize: 18, height: 1.8,),),
-                                SizedBox(height: 35),
-                                Visibility(visible: user.userType == UserType.USER, child: BtnMain(title: AppLocalization.of(context).translate("Order Service"), onTap: () => Navigator.of(context).pushNamed("/AppointmentBooking", arguments: widget.udidService))),
+                                Text(AppLocalization.of(context)!.translate("Info:-"), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 22, fontWeight: FontWeight.w500),),
+                                const SizedBox(height: 10),
+                                Text(lang == Language.ARABIC ? service.detailsAR : service.detailsEN, style: const TextStyle(color: Colors.blueGrey, fontSize: 18, height: 1.8,),),
+                                const SizedBox(height: 35),
+                                Visibility(visible: user.userType == UserType.USER, child:  BtnMain(title: AppLocalization.of(context)!.translate("Order Service"), onTap: () => Navigator.of(context).pushNamed("/AppointmentBooking", arguments: widget.udidService))),
                               ],
                             ),
                           )
@@ -109,12 +112,12 @@ class _ServiceDetailsState extends State<ServiceDetails> {
           );
         }
 
-        return SizedBox();
+        return const SizedBox();
       }
     );
   }
 
-  _renderSlider(context, { @required List<String> images }) {
+  _renderSlider(context, { required List<String> images }) {
     return CarouselSlider(
       options: CarouselOptions(
         height: MediaQuery.of(context).size.height * (380 / 812),

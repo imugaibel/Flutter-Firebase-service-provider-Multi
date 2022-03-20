@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-customButton(context, { @required String title, icon, @required Function onPressed }) {
+customButton(context, { required String title, icon,   onPressed }) {
   return Container(
     width: MediaQuery.of(context).size.width * (315 / 375),
     height: MediaQuery.of(context).size.height * (60 / 812),
@@ -16,7 +16,7 @@ customButton(context, { @required String title, icon, @required Function onPress
           padding: EdgeInsets.only(top: 5),
           child: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/image_picker/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/image_picker/intermediates/res/merged/debug/layout/notification_action.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/layout/notification_action.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/image_picker/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/image_picker/intermediates/res/merged/debug/layout/custom_dialog.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/image_picker/intermediates/res/merged/debug/layout/notification_action_tombstone.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/layout/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/image_picker/intermediates/res/merged/debug/layout/notification_template_icon_group.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/layout/notification_template_icon_group.xml"
+    }
+]

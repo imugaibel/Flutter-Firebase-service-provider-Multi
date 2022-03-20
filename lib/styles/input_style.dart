@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-OutlineInputBorder customBorderInput = OutlineInputBorder(
+OutlineInputBorder customBorderInput = const OutlineInputBorder(
   borderSide: BorderSide(
     color: Colors.transparent,
   ),
@@ -12,8 +12,8 @@ InputDecoration customInputForm = InputDecoration(
   focusedBorder: customBorderInput,
   enabledBorder: customBorderInput,
   filled: true,
-  fillColor: Color(0xFFF0F4F8),
-  hintStyle: TextStyle(
+  fillColor: const Color(0xFFF0F4F8),
+  hintStyle: const TextStyle(
     fontSize: 18,
     color: Colors.grey,
   ),

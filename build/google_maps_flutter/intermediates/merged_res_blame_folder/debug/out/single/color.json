@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/google_maps_flutter/intermediates/res/merged/debug/color/common_google_signin_btn_tint.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/3df04842ebdccec960483a2c983d31d1/jetified-play-services-base-17.0.0/res/color/common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/google_maps_flutter/intermediates/res/merged/debug/color/common_google_signin_btn_text_dark.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/3df04842ebdccec960483a2c983d31d1/jetified-play-services-base-17.0.0/res/color/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/google_maps_flutter/intermediates/res/merged/debug/color/common_google_signin_btn_text_light.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/3df04842ebdccec960483a2c983d31d1/jetified-play-services-base-17.0.0/res/color/common_google_signin_btn_text_light.xml"
+    }
+]

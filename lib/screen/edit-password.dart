@@ -7,26 +7,28 @@ import 'package:maintenance/utils/extensions.dart';
 
 class EditPassword extends StatelessWidget {
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
-  String newPassword;
-  String confirmPassword;
+  String? newPassword;
+  String? confirmPassword;
+
+  EditPassword({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(AppLocalization.of(context).translate("Edit Password")),
+        title: Text(AppLocalization.of(context)!.translate("Edit Password")),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Icon(
                 Icons.lock_outline,
                 size: 150,
@@ -38,7 +40,7 @@ class EditPassword extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      onSaved: (value) => newPassword = value.trim(),
+                      onSaved: (value) => newPassword = value!.trim(),
                       textInputAction: TextInputAction.next,
                       style: TextStyle(
                         fontSize: 18,
@@ -48,11 +50,11 @@ class EditPassword extends StatelessWidget {
                         Icons.lock_outline,
                         color: Theme.of(context).accentColor,
                       ),
-                      ).copyWith(hintText: AppLocalization.of(context).translate("New password")),
+                      ).copyWith(hintText: AppLocalization.of(context)!.translate("New password")),
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     TextFormField(
-                      onSaved: (value) => confirmPassword = value.trim(),
+                      onSaved: (value) => confirmPassword = value!.trim(),
                       textInputAction: TextInputAction.next,
                       style: TextStyle(
                         fontSize: 18,
@@ -62,16 +64,16 @@ class EditPassword extends StatelessWidget {
                         Icons.lock_outline,
                         color: Theme.of(context).accentColor,
                       ),
-                      ).copyWith(hintText: AppLocalization.of(context).translate("Confirm password")),
+                      ).copyWith(hintText: AppLocalization.of(context)!.translate("Confirm password")),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * (100 / 812)),
-                    RaisedButton(
-                        color: Theme.of(context).accentColor,
-                        child: Text(AppLocalization.of(context).translate("Change password"),
-                            style: TextStyle(color:  Theme.of(context).scaffoldBackgroundColor,fontWeight: FontWeight.bold,
-                              fontSize: 20,)),
-                        onPressed: () => _btnChange(context)),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * ( 55 / 812 ),
+                      child: customButton(context, title: AppLocalization.of(context)!.translate("Change password"), onPressed: () => _btnChange(context)),
+                    ),
+                    const SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                   ],
                 ),
               ),
@@ -88,16 +90,16 @@ class EditPassword extends StatelessWidget {
 
   _btnChange(context) {
 
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
 
     if (_validation()) {
       if (newPassword == confirmPassword) {
-        FirebaseManager.shared.changePassword(scaffoldKey: _scaffoldKey, newPassword: newPassword, confirmPassword: confirmPassword);
+        FirebaseManager.shared.changePassword(scaffoldKey: _scaffoldKey, newPassword: newPassword!, confirmPassword: confirmPassword!);
       } else {
-        _scaffoldKey.showTosta(message: AppLocalization.of(context).translate("Passwords do not match"), isError: true);
+        _scaffoldKey.showTosta(message: AppLocalization.of(context)!.translate("Passwords do not match"), isError: true);
       }
     } else {
-      _scaffoldKey.showTosta(message: AppLocalization.of(context).translate("Please fill in all fields"), isError: true);
+      _scaffoldKey.showTosta(message: AppLocalization.of(context)!.translate("Please fill in all fields"), isError: true);
     }
 
   }

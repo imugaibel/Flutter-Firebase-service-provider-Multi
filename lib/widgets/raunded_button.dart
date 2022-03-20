@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-raundedButton(context, { @required String title, icon, @required Function onPressed }) {
+raundedButton(context, { required String title, icon,   onPressed }) {
   return Container(
     width: MediaQuery.of(context).size.width * (315 / 375),
     height: MediaQuery.of(context).size.height * (60 / 812),
@@ -10,7 +10,7 @@ raundedButton(context, { @required String title, icon, @required Function onPres
       focusElevation: 0,
       highlightElevation: 0,
       color: Colors.white,
-      onPressed: onPressed,
+      onPressed: onPressed(),
       textColor: Theme.of(context).primaryColor,
       shape: RoundedRectangleBorder(
           side: BorderSide(color: Theme.of(context).primaryColor, width: 1),
@@ -21,7 +21,7 @@ raundedButton(context, { @required String title, icon, @required Function onPres
           padding: EdgeInsets.only(top: 5),
           child: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),

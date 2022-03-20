@@ -11,9 +11,6 @@ import 'package:maintenance/screen/tabbar/home-admin.dart';
 import 'package:maintenance/screen/tabbar/users.dart';
 import 'package:maintenance/utils/app_localization.dart';
 
-import 'all-service-hidden.dart';
-import 'allhiddenstat.dart';
-
 class TabBarItem {
 
   final IconData icon;
@@ -26,9 +23,9 @@ class TabBarItem {
 
 class TabBarPage extends StatefulWidget {
 
-  final UserType userType;
+  final Object?  userType;
 
-  const TabBarPage({Key key, this.userType}) : super(key: key);
+  const TabBarPage({Key? key, this.userType}) : super(key: key);
 
   @override
   _TabBarPageState createState() => _TabBarPageState();
@@ -36,7 +33,7 @@ class TabBarPage extends StatefulWidget {
 
 class _TabBarPageState extends State<TabBarPage> {
 
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
   int indexTap = 0;
 
@@ -47,34 +44,30 @@ class _TabBarPageState extends State<TabBarPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     switch (widget.userType) {
-      case UserType.Hidden:
-        tabItems = [];
-        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "All Services", AllServicehidden()));
-        tabItems.add(TabBarItem(Icons.supervised_user_circle_sharp, "Users", allhiddenstart()));
-        tabItems.add(TabBarItem(Icons.person, "Profile", Profile()));
-        break;
       case UserType.ADMIN:
         tabItems = [];
-        tabItems.add(TabBarItem(Icons.home, "Home", HomeAdmin()));
+        tabItems.add(TabBarItem(Icons.home, "Home", const HomeAdmin()));
         tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "All Services", AllServiceAdmin()));
-        tabItems.add(TabBarItem(Icons.supervised_user_circle_sharp, "Users", Users()));
-        tabItems.add(TabBarItem(Icons.person, "Profile", Profile()));
+        tabItems.add(TabBarItem(Icons.supervised_user_circle_sharp, "Users", const Users()));
+        tabItems.add(TabBarItem(Icons.person, "Profile", const Profile()));
         break;
       case UserType.TECHNICIAN:
         tabItems = [];
-        tabItems.add(TabBarItem(Icons.home, "Home", HomeTechnican()));
-        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "My Services", Service()));
-        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "Requests", RequestServices()));
-        tabItems.add(TabBarItem(Icons.person, "Profile", Profile()));
+        tabItems.add(TabBarItem(Icons.home, "Home", const HomeTechnican()));
+        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "My Services", const Service()));
+        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "Requests", const RequestServices()));
+        tabItems.add(TabBarItem(Icons.person, "Profile", const Profile()));
         break;
       case UserType.USER:
         tabItems = [];
-        tabItems.add(TabBarItem(Icons.home, "Home", Home()));
-        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "Services", Service()));
-        tabItems.add(TabBarItem(Icons.sticky_note_2_sharp, "My Orders", MyOrder()));
-        tabItems.add(TabBarItem(Icons.person, "Profile", Profile()));
+        tabItems.add(TabBarItem(Icons.home, "Home", const Home()));
+        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "Services", const Service()));
+        tabItems.add(TabBarItem(Icons.sticky_note_2_sharp, "My Orders", const MyOrder()));
+        tabItems.add(TabBarItem(Icons.person, "Profile", const Profile()));
     }
+
   }
 
   @override
@@ -106,7 +99,7 @@ class _TabBarPageState extends State<TabBarPage> {
               indexTap = index;
             });
             _pageController.animateToPage(indexTap,
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 curve: Curves.easeIn
             );
           },
@@ -134,7 +127,7 @@ class _TabBarPageState extends State<TabBarPage> {
     List<BottomNavigationBarItem> items = [];
 
     for (var i = 0; i < tabItems.length; i++) {
-      BottomNavigationBarItem obj = BottomNavigationBarItem(icon: Icon(tabItems[i].icon, color: indexTap == i ? Theme.of(context).primaryColor : Colors.black26,), label: AppLocalization.of(context).translate(tabItems[i].label));
+      BottomNavigationBarItem obj = BottomNavigationBarItem(icon: Icon(tabItems[i].icon, color: indexTap == i ? Theme.of(context).primaryColor : Colors.black26,), label: AppLocalization.of(context)!.translate(tabItems[i].label));
       items.add(obj);
     }
 

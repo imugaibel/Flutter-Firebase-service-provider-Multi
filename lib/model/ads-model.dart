@@ -4,9 +4,9 @@ AdsModel adsModelFromJson(String str) => AdsModel.fromJson(json.decode(str));
 
 class AdsModel {
   AdsModel({
-    this.image,
-    this.createdDate,
-    this.uid,
+    required this.image,
+    required this.createdDate,
+    required this.uid,
   });
 
   String image;

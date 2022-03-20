@@ -7,34 +7,34 @@ import 'package:maintenance/utils/extensions.dart';
 
 class SelectLocation extends StatefulWidget {
 
-  final LatLng position;
+  final  position;
 
-  const SelectLocation({Key key, this.position}) : super(key: key);
+  const SelectLocation({Key? key,  this.position}) : super(key: key);
 
   @override
   State<SelectLocation> createState() => SelectLocationState();
 }
 
 class SelectLocationState extends State<SelectLocation> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
 
-  CameraPosition _kGooglePlex;
+  CameraPosition? _kGooglePlex;
 
   List<Marker> _markers = [];
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _kGooglePlex = CameraPosition(
-      target: widget.position != null ? LatLng(widget.position.latitude, widget.position.longitude) : LatLng(24.774265, 46.738586),
+      target: widget.position != null ? LatLng(widget.position.latitude, widget.position.longitude) : const LatLng(24.774265, 46.738586),
       zoom: 10,
     );
 
     if (widget.position != null) {
-      _markers = [Marker(markerId: MarkerId('mark'), position: widget.position)];
+      _markers = [Marker(markerId: const MarkerId('mark'), position: widget.position)];
     }
   }
 
@@ -43,38 +43,44 @@ class SelectLocationState extends State<SelectLocation> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(AppLocalization.of(context).translate("Select your location")),
+        title: Text(AppLocalization.of(context)!.translate("Select your location")),
         centerTitle: true,
       ),
       body: Stack(
         children: [
           GoogleMap(
             onTap: (LatLng latLng) {
-              _markers = [Marker(markerId: MarkerId('mark'), position: latLng)];
+              _markers = [Marker(markerId: const MarkerId('mark'), position: latLng)];
               setState(() {});
             },
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
             markers: Set<Marker>.of(_markers),
-            initialCameraPosition: _kGooglePlex,
+            initialCameraPosition: _kGooglePlex!,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
             },
           ),
           Align(
           alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 30),
-              width: MediaQuery.of(context).size.width * (0.7),
-              child: BtnMain(title: AppLocalization.of(context).translate("Select location"), onTap: () {
+            child: FlatButton(
+                onPressed: () {
 
-                if (_markers.length == 0) {
-                  _scaffoldKey.showTosta(message: AppLocalization.of(context).translate("Please, select the location"), isError: true);
-                  return;
-                }
+                  if (_markers.isEmpty) {
+                    _scaffoldKey.showTosta(message: AppLocalization.of(context)!.translate("Please, select the location"), isError: true);
+                    return;
+                  }
 
-                Navigator.of(context).pop(_markers.first.position);
-              },),
+                  Navigator.of(context).pop(_markers.first.position);
+                },
+                child: Text(
+                  AppLocalization.of(context)!.translate("Select location"),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
             ),
           ),
         ],

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:maintenance/Front/Front.dart';
 import 'package:maintenance/enums/language.dart';
 import 'package:maintenance/main.dart';
 import 'package:maintenance/model/user-model.dart';
-import 'package:maintenance/screen/select_language.dart';
 import 'package:maintenance/screen/signin.dart';
 import 'package:maintenance/screen/tabbar/tabbar.dart';
 import 'package:maintenance/utils/user_profile.dart';
-import 'package:maintenance/widgets/choose-user-type.dart';
 
 class Wrapper extends StatelessWidget {
+  const Wrapper({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<UserModel>(
+    return FutureBuilder<UserModel?>(
         future: UserProfile.shared.getUser(),
         builder: (context, snapshot) {
 
@@ -25,12 +24,11 @@ class Wrapper extends StatelessWidget {
           });
 
           if (snapshot.hasData) {
-            return TabBarPage(userType: snapshot.data.userType);
+            return TabBarPage(userType: snapshot.data!.userType);
           } else {
-            return Front();
+            return const SignIn(message: null,);
           }
         }
     );
   }
 }
-

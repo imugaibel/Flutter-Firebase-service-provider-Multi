@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/drawable/notification_tile_bg.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/drawable/notification_icon_background.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/drawable/notification_bg_low.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/Users/mesharisuliman/Documents/GitHub/Flutter-Firebase-Google-Maps-service-provider-Multi/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/drawable/notification_bg.xml",
+        "source": "/Users/mesharisuliman/.gradle/caches/transforms-2/files-2.1/4790ef1fc5963992925f9532c68ee1d7/core-1.6.0/res/drawable/notification_bg.xml"
+    }
+]

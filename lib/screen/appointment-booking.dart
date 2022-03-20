@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,9 +16,8 @@ import 'package:maintenance/utils/extensions.dart';
 
 class AppointmentBooking extends StatefulWidget {
 
-  final String uidActiveService;
-
-  const AppointmentBooking({Key key, this.uidActiveService}) : super(key: key);
+  final  uidActiveService;
+  const AppointmentBooking({Key? key, this.uidActiveService}) : super(key: key);
 
   @override
   _AppointmentBookingState createState() => _AppointmentBookingState();
@@ -27,16 +25,16 @@ class AppointmentBooking extends StatefulWidget {
 
 class _AppointmentBookingState extends State<AppointmentBooking> {
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  TextEditingController _imageController = TextEditingController();
-  TextEditingController _locationController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final TextEditingController _imageController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
 
-  File _image;
-  List<DropdownMenuItem> _dropdownMenuItem = [];
-  String _activeDropDownItem;
-  String details;
-  double lat;
-  double lng;
+ // late File _image;
+  List<DropdownMenuItem<String>> _dropdownMenuItem = [];
+   String? _activeDropDownItem ;
+  late String details;
+ //   double? lat;
+  //  double? lng;
 
   Language lang = Language.ENGLISH;
 
@@ -46,11 +44,14 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
     super.initState();
     _getServiceData();
     UserProfile.shared.getLanguage().then((value) {
-      setState(() {
-        lang = value;
-      });
+      if (value != null) {
+        setState(() {
+          lang = value;
+        });
+      }
     });
   }
+
 
   @override
   void dispose() {
@@ -65,7 +66,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(AppLocalization.of(context).translate("Appointment Booking")),
+        title: Text(AppLocalization.of(context)!.translate("Appointment Booking")),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -82,11 +83,11 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                     DropdownButtonFormField(
                       items: _dropdownMenuItem,
                       onChanged: (newValue) {
-                        setState(() => _activeDropDownItem = newValue);
+                        setState(() => _activeDropDownItem = newValue as String);
                       },
                       value: _activeDropDownItem,
                       decoration: InputDecoration(
-                        labelText: AppLocalization.of(context).translate("Service"),
+                        labelText: AppLocalization.of(context)!.translate("Service"),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -95,7 +96,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                       onTap: () => _selectImgDialog(context),
                       readOnly: true,
                       decoration: InputDecoration(
-                        labelText: AppLocalization.of(context).translate("Attach a Picture"),
+                        labelText: AppLocalization.of(context)!.translate("Attach a Picture"),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -104,7 +105,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                       maxLines: null,
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
-                        labelText: AppLocalization.of(context).translate("Details"),
+                        labelText: AppLocalization.of(context)!.translate("Details"),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -113,14 +114,14 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                       onTap: () => _openMap(context),
                       readOnly: true,
                       decoration: InputDecoration(
-                        labelText: AppLocalization.of(context).translate("Location"),
+                        labelText: AppLocalization.of(context)!.translate("Location"),
                       ),
                     ),
                   ],
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * (80 / 812),),
-              BtnMain(title: AppLocalization.of(context).translate("Order Service"), onTap: _submitData),
+              BtnMain(title: AppLocalization.of(context)!.translate("Order Service"), onTap: _submitData),
             ],
           ),
         ),
@@ -137,12 +138,12 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
               children: <Widget>[
                 ListTile(
                     leading: Icon(Icons.camera_alt),
-                    title: Text(AppLocalization.of(context).translate('Image form camera')),
+                    title: Text(AppLocalization.of(context)!.translate('Image form camera')),
                     onTap: () => _selectImage(type: ImageSource.camera)
                 ),
                 ListTile(
                   leading: Icon(Icons.image),
-                  title: Text(AppLocalization.of(context).translate('Image from gallery')),
+                  title: Text(AppLocalization.of(context)!.translate('Image from gallery')),
                   onTap: () => _selectImage(type: ImageSource.gallery),
                 ),
               ],
@@ -152,19 +153,19 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
     );
   }
 
-  _selectImage({ @required ImageSource type }) async {
-    PickedFile image = await ImagePicker.platform.pickImage(
+  _selectImage({ required ImageSource type }) async {
+    PickedFile? image = await ImagePicker.platform.pickImage(
         source: type);
     setState(() {
-      _image = File(image.path);
-      _imageController.text = AppLocalization.of(context).translate("photo attached");
+   //   _image = File(image!.path);
+      _imageController.text = AppLocalization.of(context)!.translate("photo attached");
     });
 
     Navigator.of(context).pop();
   }
 
   _openMap(context) async {
-    LatLng selectedPosition;
+    LatLng? selectedPosition;
 
     var tempLatLng = _locationController.text.split(", ");
 
@@ -178,8 +179,8 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
               position: selectedPosition,
             )));
     _locationController.text = "${position.latitude}, ${position.longitude}";
-    lat = position.latitude;
-    lng = position.longitude;
+ //   lat = position.latitude;
+  //  lng = position.longitude;
   }
 
   _getServiceData() async {
@@ -204,13 +205,13 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
   _submitData() async {
 
     if (!_validation()) {
-      _scaffoldKey.showTosta(message: AppLocalization.of(context).translate("Please fill in all fields"), isError: true);
+      _scaffoldKey.showTosta(message: AppLocalization.of(context)!.translate("Please fill in all fields"), isError: true);
       return;
     }
 
-    ServiceModel item = await FirebaseManager.shared.getServiceById(id: _activeDropDownItem).first;
+    ServiceModel item = await FirebaseManager.shared.getServiceById(id: _activeDropDownItem!).first;
 
-    FirebaseManager.shared.addOrEditOrder(context, image: _image, ownerId: item.uidOwner, serviceId: _activeDropDownItem, lat: lat, lng: lng, details: details);
+    FirebaseManager.shared.addOrEditOrder(context,  ownerId: item.uidOwner, serviceId: _activeDropDownItem!,  details: details, scaffoldKey: _scaffoldKey,);
 
   }
 

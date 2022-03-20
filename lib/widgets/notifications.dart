@@ -3,6 +3,8 @@ import 'package:maintenance/model/notification-model.dart';
 import 'package:maintenance/utils/firebase-manager.dart';
 
 class NotificationsWidget extends StatelessWidget {
+  const NotificationsWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<NotificationModel>>(
@@ -13,7 +15,7 @@ class NotificationsWidget extends StatelessWidget {
 
           List<NotificationModel> items = [];
 
-          for (var item in snapshot.data) {
+          for (var item in snapshot.data!) {
             if (!item.isRead) {
               items.add(item);
             }
@@ -22,21 +24,21 @@ class NotificationsWidget extends StatelessWidget {
           return InkWell(
             onTap: () => Navigator.of(context).pushNamed("/Notification"),
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Stack(
                 children: [
-                  Icon(Icons.notifications, color: Colors.white, size: 32,),
+                  const Icon(Icons.notifications, color: Colors.white, size: 32,),
                   Visibility(
-                    visible: items.length > 0,
+                    visible: items.isNotEmpty,
                     child: Positioned(
                         top: -3,
                         child: Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
+                          padding: const EdgeInsets.all(5),
+                          decoration: const BoxDecoration(
                             color: Colors.red,
                             shape: BoxShape.circle,
                           ),
-                          child: Text(items.length.toString(), style: TextStyle(fontSize: 12),),
+                          child: Text(items.length.toString(), style: const TextStyle(fontSize: 12),),
                         )),
                   ),
                 ],
@@ -44,7 +46,7 @@ class NotificationsWidget extends StatelessWidget {
             ),
           );
         } else {
-          return SizedBox();
+          return const SizedBox();
         }
 
       }

@@ -9,16 +9,19 @@ import 'package:maintenance/utils/user_profile.dart';
 import 'package:maintenance/widgets/btn-main.dart';
 import 'package:maintenance/widgets/loader.dart';
 
+
 class Wallet extends StatefulWidget {
+  const Wallet({Key? key}) : super(key: key);
+
   @override
   _WalletState createState() => _WalletState();
 }
 
 class _WalletState extends State<Wallet> {
 
-  TextEditingController _balanceController = TextEditingController();
+  final TextEditingController _balanceController = TextEditingController();
 
-  UserType userType = UserType.TECHNICIAN;
+  UserType userType = UserType.USER;
 
   @override
   void dispose() {
@@ -31,21 +34,18 @@ class _WalletState extends State<Wallet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalization.of(context).translate("Wallet")),
+        title: Text(AppLocalization.of(context)!.translate("Wallet")),
         centerTitle: true,
       ),
-      body: FutureBuilder<UserModel>(
+      body: FutureBuilder<UserModel?>(
           future: UserProfile.shared.getUser(),
           builder: (context, snapshot) {
-
             if (snapshot.hasData) {
-
-              if (snapshot.data.userType == UserType.ADMIN) {
+              if (snapshot.data!.userType == UserType.ADMIN) {
                 return _adminWallet(context);
               } else {
                 return _userWallet(context);
               }
-
             } else {
               return Center(child: loader(context),);
             }
@@ -62,7 +62,7 @@ class _WalletState extends State<Wallet> {
 
           if (snapshot.hasData) {
             return Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,14 +73,14 @@ class _WalletState extends State<Wallet> {
                     child: SvgPicture.asset(Assets.shared.icWallet,),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * (100 / 812),),
-                  Text(AppLocalization.of(context).translate("Your balance is:"), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),),
-                  SizedBox(height: 20),
+                  Text(AppLocalization.of(context)!.translate("Your balance is:"), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("${snapshot.data.balance}", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),),
-                      SizedBox(width: 5),
-                      Text(AppLocalization.of(context).translate("RAS"), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),),
+                      Text("${snapshot.data!.balance}", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),),
+                      const SizedBox(width: 5),
+                      Text(AppLocalization.of(context)!.translate("RAS"), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),),
                     ],
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * (100 / 812),),
@@ -99,26 +99,22 @@ class _WalletState extends State<Wallet> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           child: _header(),
         ),
         Expanded(
           child: StreamBuilder<List<UserModel>>(
               stream: FirebaseManager.shared.getAllUsers(),
               builder: (context, snapshot) {
-
                 if (snapshot.hasData) {
-
                   List<UserModel> users = [];
-
-                  for (var user in snapshot.data) {
+                  for (var user in snapshot.data!) {
                     if (user.userType == userType) {
                       users.add(user);
                     }
                   }
-
                   return ListView.builder(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     itemCount: users.length,
                     itemBuilder: (context, index) {
                       return _cellItem(context, user: users[index]);
@@ -135,57 +131,57 @@ class _WalletState extends State<Wallet> {
     );
   }
 
-  Widget _cellItem(context, { @required UserModel user }) {
+  Widget _cellItem(context, { required UserModel user }) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).primaryColor),
+        border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
-              Text(AppLocalization.of(context).translate("User ID: "), style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),),
-              SizedBox(width: 10),
-              Flexible(child: Text(user.id, style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor))),
+              Text(AppLocalization.of(context)!.translate("User ID: "), style: const TextStyle(fontSize: 18, color: Colors.grey),),
+              const SizedBox(width: 10),
+              Flexible(child: Text(user.id, style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
-              Text(AppLocalization.of(context).translate("User name: "), style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),),
-              SizedBox(width: 10),
-              Flexible(child: Text(user.name, style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor))),
+              Text(AppLocalization.of(context)!.translate("User name: "), style: const TextStyle(fontSize: 18, color: Colors.grey),),
+              const SizedBox(width: 10),
+              Flexible(child: Text(user.name, style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
-              Text(AppLocalization.of(context).translate("Email: "), style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),),
-              SizedBox(width: 10),
-              Flexible(child: Text(user.email, style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor))),
+              Text(AppLocalization.of(context)!.translate("Email: "), style: const TextStyle(fontSize: 18, color: Colors.grey),),
+              const SizedBox(width: 10),
+              Flexible(child: Text(user.email, style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
-              Text(AppLocalization.of(context).translate("Phone: "), style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),),
-              SizedBox(width: 10),
-              Flexible(child: Text(user.phone, style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor))),
+              Text(AppLocalization.of(context)!.translate("Phone: "), style: const TextStyle(fontSize: 18, color: Colors.grey),),
+              const SizedBox(width: 10),
+              Flexible(child: Text(user.phone, style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
-              Text(AppLocalization.of(context).translate("User balance: "), style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),),
-              SizedBox(width: 10),
-              Flexible(child: Text("${user.balance} ${AppLocalization.of(context).translate("RAS")}", style: TextStyle(fontSize: 16, color: Theme.of(context).accentColor))),
+              Text(AppLocalization.of(context)!.translate("User balance: "), style: const TextStyle(fontSize: 18, color: Colors.grey),),
+              const SizedBox(width: 10),
+              Flexible(child: Text("${user.balance} ${AppLocalization.of(context)!.translate("RAS")}", style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -197,14 +193,14 @@ class _WalletState extends State<Wallet> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.3,
                   height: MediaQuery.of(context).size.height * (50 / 812),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: Center(
                       child: Text(
-                        AppLocalization.of(context).translate("Edit Balance"),
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        AppLocalization.of(context)!.translate("Edit Balance"),
+                        style: const TextStyle(color: Colors.white, fontSize: 18),
                       )),
                 ),
               ),
@@ -219,8 +215,8 @@ class _WalletState extends State<Wallet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalization.of(context).translate("User Type:-"), style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),),
-        SizedBox(height: 10),
+        Text(AppLocalization.of(context)!.translate("User Type:-"), style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),),
+        const SizedBox(height: 10),
         Row(
           children: [
             Row(
@@ -229,13 +225,13 @@ class _WalletState extends State<Wallet> {
                   activeColor: Theme.of(context).primaryColor,
                   value: UserType.TECHNICIAN,
                   groupValue: userType,
-                  onChanged: (UserType value) {
+                  onChanged: (UserType? value) {
                     setState(() {
-                      userType = value;
+                      userType = value!;
                     });
                   },
                 ),
-                Text(AppLocalization.of(context).translate("technicians")),
+                Text(AppLocalization.of(context)!.translate("technicians")),
               ],
             ),
             Row(
@@ -244,27 +240,27 @@ class _WalletState extends State<Wallet> {
                   activeColor: Theme.of(context).primaryColor,
                   value: UserType.USER,
                   groupValue: userType,
-                  onChanged: (UserType value) {
+                  onChanged: (UserType? value) {
                     setState(() {
-                      userType = value;
+                      userType = value!;
                     });
                   },
                 ),
-                Text(AppLocalization.of(context).translate("users")),
+                Text(AppLocalization.of(context)!.translate("users")),
               ],
             ),
           ],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Container(height: 1, color: Theme.of(context).primaryColor,),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }
 
-  _editBalance(context, { @required String uidUser }) {
+  _editBalance(context, { required String uidUser }) {
     AlertDialog alert = AlertDialog(
-      content: Container(
+      content: SizedBox(
         height: MediaQuery.of(context).size.height * (140 / 812),
         child: Column(
           children: [
@@ -272,13 +268,13 @@ class _WalletState extends State<Wallet> {
               controller: _balanceController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).translate("Balance")
+                  labelText: AppLocalization.of(context)!.translate("Balance")
               ),
             ),
-            Expanded(child: SizedBox()),
-            Container(
+            const Expanded(child: SizedBox()),
+            SizedBox(
               height: MediaQuery.of(context).size.height * (40 / 812),
-              child: BtnMain(title: AppLocalization.of(context).translate("Edit Balance"), onTap: () {
+              child: BtnMain(title: AppLocalization.of(context)!.translate("Edit Balance"), onTap: () {
                 FirebaseManager.shared.updateWalletToUser(context, uid: uidUser, balance: double.parse(_balanceController.text.trim() == "" ? "0.0" : _balanceController.text.trim()));
                 Navigator.of(context).pop();
               },),
