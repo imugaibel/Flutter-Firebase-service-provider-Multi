@@ -49,7 +49,7 @@ class _TabBarPageState extends State<TabBarPage> {
       case UserType.ADMIN:
         tabItems = [];
         tabItems.add(TabBarItem(Icons.home, "Home", const HomeAdmin()));
-        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "All Services", AllServiceAdmin()));
+        tabItems.add(TabBarItem(Icons.home_repair_service_rounded, "All Services", const AllServiceAdmin()));
         tabItems.add(TabBarItem(Icons.supervised_user_circle_sharp, "Users", const Users()));
         tabItems.add(TabBarItem(Icons.person, "Profile", const Profile()));
         break;

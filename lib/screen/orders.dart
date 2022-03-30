@@ -306,7 +306,7 @@ class _OrdersState extends State<Orders> {
                               return Text(serviceName,
                                   style: TextStyle(
                                       fontSize: 16,
-                                      color: Theme.of(context).accentColor));
+                                      color: Theme.of(context).colorScheme.secondary));
                             }),
                       ],
                     ),
@@ -339,7 +339,7 @@ class _OrdersState extends State<Orders> {
                     Text(order.details,
                         style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context).accentColor)),
+                            color: Theme.of(context).colorScheme.secondary)),
                   ],
                 ),
                 Visibility(
@@ -362,7 +362,7 @@ class _OrdersState extends State<Orders> {
                                   ? order.messageAR: order.messageEN,
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: Theme.of(context).accentColor)),
+                                  color: Theme.of(context).colorScheme.secondary)),
                         ],
                       ),
                     ],
@@ -388,7 +388,7 @@ class _OrdersState extends State<Orders> {
                                   ? order.messageAR: order.messageEN,
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: Theme.of(context).accentColor)),
+                                  color: Theme.of(context).colorScheme.secondary)),
                         ],
                       ),
                     ],
@@ -411,7 +411,7 @@ class _OrdersState extends State<Orders> {
                             snapshot.hasData ? snapshot.data!.name : "",
                             style: TextStyle(
                                 fontSize: 16,
-                                color: Theme.of(context).accentColor),
+                                color: Theme.of(context).colorScheme.secondary),
                           );
                         }),
                   ],
@@ -433,7 +433,7 @@ class _OrdersState extends State<Orders> {
                             snapshot.hasData ? snapshot.data!.name : "",
                             style: TextStyle(
                                 fontSize: 16,
-                                color: Theme.of(context).accentColor),
+                                color: Theme.of(context).colorScheme.secondary),
                           );
                         }),
                   ],
@@ -450,7 +450,7 @@ class _OrdersState extends State<Orders> {
                     Text(
                       order.createdDate.changeDateFormat(),
                       style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).accentColor),
+                          fontSize: 16, color: Theme.of(context).colorScheme.secondary),
                     ),
                   ],
                 ),
@@ -472,7 +472,7 @@ class _OrdersState extends State<Orders> {
                           statusTitle,
                           style: TextStyle(
                               fontSize: 16,
-                              color: Theme.of(context).accentColor),
+                              color: Theme.of(context).colorScheme.secondary),
                         ),
                       ],
                     ),

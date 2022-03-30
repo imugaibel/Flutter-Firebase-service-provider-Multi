@@ -44,11 +44,11 @@ class EditPassword extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       style: TextStyle(
                         fontSize: 18,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       decoration: customInputForm.copyWith(prefixIcon: Icon(
                         Icons.lock_outline,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       ).copyWith(hintText: AppLocalization.of(context)!.translate("New password")),
                     ),
@@ -58,11 +58,11 @@ class EditPassword extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       style: TextStyle(
                         fontSize: 18,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       decoration: customInputForm.copyWith(prefixIcon: Icon(
                         Icons.lock_outline,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       ).copyWith(hintText: AppLocalization.of(context)!.translate("Confirm password")),
                     ),

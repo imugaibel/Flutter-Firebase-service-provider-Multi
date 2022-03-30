@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
    Widget build(BuildContext context) {
      return Scaffold(
        body: Container(
-         padding: EdgeInsets.all(20),
+         padding: const EdgeInsets.all(20),
          width: double.infinity,
          child: Column(
            crossAxisAlignment: CrossAxisAlignment.center,
@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
              Expanded(child: SvgPicture.asset(Assets.shared.icTranslate)),
              SizedBox(height: MediaQuery.of(context).size.height * (60 / 812)),
              BtnMain(title: "English", onTap: () => _btnSelectLanguage(context, lang: Language.ENGLISH),),
-             SizedBox(height: 20),
+             const SizedBox(height: 20),
              BtnMain(title: "عربي", onTap: () => _btnSelectLanguage(context, lang: Language.ARABIC),),
            ],
          ),

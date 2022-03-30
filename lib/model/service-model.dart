@@ -34,16 +34,16 @@ class ServiceModel {
   String uid;
 
   factory ServiceModel.fromJson(Map<String, dynamic>? json) => ServiceModel(
-        images: json!["images"].toString().split(", "),
-        titleEN: json["title-en"],
-        detailsEN: json["details-en"],
-        titleAR: json["title-ar"],
-        detailsAR: json["details-ar"],
-        createdDate: json["createdDate"],
-        uidOwner: json["uid-owner"],
-        status: Status.values[json["status"]],
-        messageEN: json["message-en"],
-        messageAR: json["message-ar"],
-        uid: json["uid"],
-      );
+    images: json!["images"].toString().split(", "),
+    titleEN: json["title-en"],
+    detailsEN: json["details-en"],
+    titleAR: json["title-ar"],
+    detailsAR: json["details-ar"],
+    createdDate: json["createdDate"],
+    uidOwner: json["uid-owner"],
+    status: Status.values[json["status"]],
+    messageEN: json["message-en"],
+    messageAR: json["message-ar"],
+    uid: json["uid"],
+  );
 }

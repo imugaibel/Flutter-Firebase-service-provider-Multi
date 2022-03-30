@@ -20,7 +20,7 @@ class ContactUs extends StatelessWidget {
           children: [
             Icon(Icons.message, size: 150, color: Theme.of(context).primaryColor,),
             const SizedBox(height: 30),
-            Text(AppLocalization.of(context)!.translate("You can contact us via through the following email:-"), style: TextStyle(color: Theme.of(context).accentColor, fontSize: 22, height: 1.8), textAlign: TextAlign.center,),
+            Text(AppLocalization.of(context)!.translate("You can contact us via through the following email:-"), style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 22, height: 1.8), textAlign: TextAlign.center,),
             const SizedBox(height: 30),
             Text("@omnii", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 26, height: 1.8), textAlign: TextAlign.center,),
           ],

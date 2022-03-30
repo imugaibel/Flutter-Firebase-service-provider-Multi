@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maintenance/utils/app_localization.dart';
 
@@ -9,7 +8,7 @@ commentDialog(context, {required String titleBtn, action}) {
   String commentAR = "";
 
   AlertDialog alert = AlertDialog(
-    content: Container(
+    content: SizedBox(
       height: MediaQuery.of(context).size.height * (180 / 812),
       child: Column(
         children: [
@@ -19,7 +18,7 @@ commentDialog(context, {required String titleBtn, action}) {
                 hintText:
                     AppLocalization.of(context)!.translate("write comment EN")),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           TextField(
@@ -28,8 +27,8 @@ commentDialog(context, {required String titleBtn, action}) {
                 hintText:
                     AppLocalization.of(context)!.translate("write comment AR")),
           ),
-          Expanded(child: SizedBox()),
-          Container(
+          const Expanded(child: SizedBox()),
+          SizedBox(
               height: MediaQuery.of(context).size.height * (40 / 812),
               child: BtnMain(title: titleBtn, onTap: () => action(commentEN, commentAR),)
           ),

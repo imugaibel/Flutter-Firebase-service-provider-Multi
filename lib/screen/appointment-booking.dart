@@ -1,7 +1,8 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maintenance/enums/language.dart';
 import 'package:maintenance/enums/status.dart';
@@ -17,7 +18,8 @@ import 'package:maintenance/utils/extensions.dart';
 class AppointmentBooking extends StatefulWidget {
 
   final  uidActiveService;
-  const AppointmentBooking({Key? key, this.uidActiveService}) : super(key: key);
+
+  const AppointmentBooking({Key? key, required this.uidActiveService}) : super(key: key);
 
   @override
   _AppointmentBookingState createState() => _AppointmentBookingState();
@@ -25,17 +27,16 @@ class AppointmentBooking extends StatefulWidget {
 
 class _AppointmentBookingState extends State<AppointmentBooking> {
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final TextEditingController _imageController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+ // TextEditingController _imageController = TextEditingController();
+//  TextEditingController _locationController = TextEditingController();
 
- // late File _image;
-  List<DropdownMenuItem<String>> _dropdownMenuItem = [];
-   String? _activeDropDownItem ;
-  late String details;
- //   double? lat;
-  //  double? lng;
-
+  List<DropdownMenuItem<String>>? _dropdownMenuItem = [];
+  String? _activeDropDownItem;
+  String? details;
+//   double? lat;
+//    double? lng;
+//   File? _image;
   Language lang = Language.ENGLISH;
 
   @override
@@ -51,13 +52,11 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
       }
     });
   }
-
-
   @override
   void dispose() {
     // TODO: implement dispose
-    _imageController.dispose();
-    _locationController.dispose();
+ //   _imageController.dispose();
+ //   _locationController.dispose();
     super.dispose();
   }
 
@@ -82,8 +81,8 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                   children: [
                     DropdownButtonFormField(
                       items: _dropdownMenuItem,
-                      onChanged: (newValue) {
-                        setState(() => _activeDropDownItem = newValue as String);
+                      onChanged: (String? newValue) {
+                        setState(() => _activeDropDownItem = newValue);
                       },
                       value: _activeDropDownItem,
                       decoration: InputDecoration(
@@ -91,15 +90,15 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    TextFormField(
-                      controller: _imageController,
-                      onTap: () => _selectImgDialog(context),
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        labelText: AppLocalization.of(context)!.translate("Attach a Picture"),
-                      ),
-                    ),
-                    SizedBox(height: 20),
+//                    TextFormField(
+//                       controller: _imageController,
+//                       onTap: () => _selectImgDialog(context),
+//                       readOnly: true,
+//                       decoration: InputDecoration(
+//                         labelText: AppLocalization.of(context)!.translate("Attach a Picture"),
+//                       ),
+//                     ),
+//                     SizedBox(height: 20),
                     TextFormField(
                       onChanged: (value) => details = value.trim(),
                       maxLines: null,
@@ -109,24 +108,24 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    TextFormField(
-                      controller: _locationController,
-                      onTap: () => _openMap(context),
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        labelText: AppLocalization.of(context)!.translate("Location"),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * (80 / 812),),
+//                    TextFormField(
+//                       controller: _locationController,
+//                       onTap: () => _openMap(context),
+//                       readOnly: true,
+//                       decoration: InputDecoration(
+//                         labelText: AppLocalization.of(context)!.translate("Location"),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               SizedBox(height: MediaQuery.of(context).size.height * (80 / 812),),
               BtnMain(title: AppLocalization.of(context)!.translate("Order Service"), onTap: _submitData),
             ],
           ),
         ),
-      ),
-    );
+      ]),
+    )));
   }
 
   _selectImgDialog(context) {
@@ -157,31 +156,31 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
     PickedFile? image = await ImagePicker.platform.pickImage(
         source: type);
     setState(() {
-   //   _image = File(image!.path);
-      _imageController.text = AppLocalization.of(context)!.translate("photo attached");
+//      _image = File(image!.path);
+//      _imageController.text = AppLocalization.of(context)!.translate("photo attached");
     });
 
     Navigator.of(context).pop();
   }
 
-  _openMap(context) async {
-    LatLng? selectedPosition;
-
-    var tempLatLng = _locationController.text.split(", ");
-
-    if (tempLatLng.length == 2) {
-      selectedPosition =
-          LatLng(double.parse(tempLatLng.first), double.parse(tempLatLng.last));
-    }
-
-    LatLng position = await Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) => SelectLocation(
-              position: selectedPosition,
-            )));
-    _locationController.text = "${position.latitude}, ${position.longitude}";
- //   lat = position.latitude;
-  //  lng = position.longitude;
-  }
+//  _openMap(context) async {
+//     LatLng? selectedPosition;
+//
+//     var tempLatLng = _locationController.text.split(", ");
+//
+//     if (tempLatLng.length == 2) {
+//       selectedPosition =
+//           LatLng(double.parse(tempLatLng.first), double.parse(tempLatLng.last));
+//     }
+//
+//     LatLng position = await Navigator.of(context).push(MaterialPageRoute(
+//         builder: (BuildContext context) => SelectLocation(
+//               position: selectedPosition,
+//             )));
+//     _locationController.text = "${position.latitude}, ${position.longitude}";
+//     lat = position.latitude;
+//     lng = position.longitude;
+//   }
 
   _getServiceData() async {
 
@@ -210,8 +209,8 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
     }
 
     ServiceModel item = await FirebaseManager.shared.getServiceById(id: _activeDropDownItem!).first;
-
-    FirebaseManager.shared.addOrEditOrder(context,  ownerId: item.uidOwner, serviceId: _activeDropDownItem!,  details: details, scaffoldKey: _scaffoldKey,);
+//    FirebaseManager.shared.addOrEditOrder(context, ownerId: item.uidOwner, serviceId: _activeDropDownItem!,  details: details!, lat: lat!, image: _image!, lng: lng!);
+    FirebaseManager.shared.addOrEditOrder(context, ownerId: item.uidOwner, serviceId: _activeDropDownItem!,  details: details!);
 
   }
 

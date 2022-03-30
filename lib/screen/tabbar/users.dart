@@ -29,7 +29,7 @@ class _UsersState extends State<Users> {
       appBar: AppBar(
         title: Text(AppLocalization.of(context)!.translate("Users")),
         centerTitle: true,
-        actions: [
+        actions: const [
           NotificationsWidget(),
         ],
       ),
@@ -235,7 +235,7 @@ class _UsersState extends State<Users> {
               Flexible(
                   child: Text(user.id,
                       style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).accentColor))),
+                          fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
           const SizedBox(height: 10),
@@ -250,7 +250,7 @@ class _UsersState extends State<Users> {
               Flexible(
                   child: Text(user.name,
                       style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).accentColor))),
+                          fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
           const SizedBox(height: 10),
@@ -265,7 +265,7 @@ class _UsersState extends State<Users> {
               Flexible(
                   child: Text(user.email,
                       style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).accentColor))),
+                          fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
           const SizedBox(height: 10),
@@ -280,7 +280,7 @@ class _UsersState extends State<Users> {
               Flexible(
                   child: Text(user.phone,
                       style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).accentColor))),
+                          fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
           const SizedBox(height: 10),
@@ -295,7 +295,7 @@ class _UsersState extends State<Users> {
               Flexible(
                   child: Text(user.dateCreated.changeDateFormat(),
                       style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).accentColor))),
+                          fontSize: 16, color: Theme.of(context).colorScheme.secondary))),
             ],
           ),
           const SizedBox(height: 20),

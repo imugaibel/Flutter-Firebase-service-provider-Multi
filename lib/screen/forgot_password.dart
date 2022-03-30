@@ -3,7 +3,6 @@ import 'package:maintenance/styles/input_style.dart';
 import 'package:maintenance/utils/app_localization.dart';
 import 'package:maintenance/utils/assets.dart';
 import 'package:maintenance/utils/firebase-manager.dart';
-import 'package:maintenance/widgets/alert.dart';
 import 'package:maintenance/widgets/custom_button.dart';
 import 'package:maintenance/utils/extensions.dart';
 

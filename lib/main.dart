@@ -15,7 +15,6 @@ import 'package:maintenance/screen/notification.dart';
 import 'package:maintenance/screen/order-details.dart';
 import 'package:maintenance/screen/orders.dart';
 import 'package:maintenance/screen/privacy-terms.dart';
-import 'package:maintenance/screen/request-service-details.dart';
 import 'package:maintenance/screen/select-location.dart';
 import 'package:maintenance/screen/service-details.dart';
 import 'package:maintenance/screen/service-form.dart';
@@ -28,16 +27,17 @@ import 'package:maintenance/screen/wrapper.dart';
 import 'package:maintenance/utils/app_localization.dart';
 import 'package:maintenance/utils/assets.dart';
 import 'package:maintenance/utils/extensions.dart';
-import 'package:maintenance/widgets/choose-user-type.dart';
-import 'manger/init.dart'
-if (dart.library.html) 'manger/web_init.dart'
-if (dart.library.io) 'manger/io_init.dart';
+
+import 'manger/init.dart';
+import 'manger/io_init.dart';
+
 
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
-    description:  'This channel is used for important notifications.', // description
+    description: 'This channel is used for important notifications.',
+    // description
     importance: Importance.high,
     playSound: true);
 
@@ -53,12 +53,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await initializeFirebase();
-  await Firebase.initializeApp().then((_) {
-    FirebaseFirestore.instance.settings =
-        const Settings(persistenceEnabled: false);
-  });
-
+  if (kIsOnMobile || kIsWeb) {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform).then((_) {
+      FirebaseFirestore.instance.settings =
+      const Settings(persistenceEnabled: false);
+    });}
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await flutterLocalNotificationsPlugin
@@ -101,7 +101,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
 
-  //  FirebaseMessaging.instance.subscribeToTopic("all");
+    //  FirebaseMessaging.instance.subscribeToTopic("all");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
@@ -173,20 +173,19 @@ class _MyAppState extends State<MyApp> {
       },
       theme: ThemeData(
         primaryColor: "#0093c9".toHexa(),
-        accentColor: "#6c757d".toHexa(),
         backgroundColor: "#ffffff".toHexa(),
         fontFamily: 'NeoSansArabic',
+        colorScheme:
+            ColorScheme.fromSwatch().copyWith(secondary: "#6c757d".toHexa()),
       ),
       initialRoute: "/Splash",
       onGenerateRoute: (settings) {
         final arguments = settings.arguments;
         switch (settings.name) {
-          case '/Splash':
+          case '/Splash'://splash
             return MaterialPageRoute(builder: (_) => const Splash());
           case '/Wrapper':
             return MaterialPageRoute(builder: (_) => const Wrapper());
-     //     case '/SelectLanguage':
-      //      return MaterialPageRoute(builder: (_) => SelectLanguage());
           case '/SignIn':
             return MaterialPageRoute(
                 builder: (_) => SignIn(
@@ -201,24 +200,23 @@ class _MyAppState extends State<MyApp> {
                 builder: (_) => TabBarPage(
                       userType: arguments,
                     ));
-          case '/ChooseUserType':
-            return MaterialPageRoute(builder: (_) => ChooseUserType());
           case '/ServiceDetails':
-            return MaterialPageRoute(builder: (_) => ServiceDetails(udidService: arguments,));
+            return MaterialPageRoute(
+                builder: (_) => ServiceDetails(
+                      udidService: arguments,
+                    ));
           case '/AppointmentBooking':
             return MaterialPageRoute(
-                builder: (_) => const AppointmentBooking(
-             //     uidActiveService: arguments,
-                ));
-          case '/SelectLocation':
-            return MaterialPageRoute(builder: (_) =>  const SelectLocation());
+                builder: (_) =>  AppointmentBooking(
+                      uidActiveService: arguments,
+                    ));
+//          case '/SelectLocation':
+//             return MaterialPageRoute(builder: (_) => const SelectLocation());
           case '/ServiceForm':
             return MaterialPageRoute(
                 builder: (_) => ServiceForm(
-               //       uidService: arguments,
+                      uidService: arguments,
                     ));
-          case '/RequestServiceDetails':
-            return MaterialPageRoute(builder: (_) => RequestServiceDetails());
           case '/AboutUs':
             return MaterialPageRoute(builder: (_) => const AboutUs());
           case '/EditProfile':

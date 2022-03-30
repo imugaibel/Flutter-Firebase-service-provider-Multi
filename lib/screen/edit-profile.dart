@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maintenance/enums/user-type.dart';
 import 'package:maintenance/model/user-model.dart';
@@ -23,20 +23,20 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final TextEditingController _locationController = TextEditingController();
+//  final TextEditingController _locationController = TextEditingController();
 
   File? _imagePerson;
   String? name;
   String? city;
   String? phone;
-  double lat = -1;
-  double lng = -1;
+//  double lat = -1;
+//   double lng = -1;
   bool isGetData = false;
 
   @override
   void dispose() {
     // TODO: implement dispose
-    _locationController.dispose();
+//    _locationController.dispose();
     super.dispose();
   }
 
@@ -57,11 +57,13 @@ class _EditProfileState extends State<EditProfile> {
                 if (snapshot.hasData) {
                   UserModel user = snapshot.data!;
 
-                  lat = user.lat;
-                  lng = user.lng;
+//                  lat = user.lat;
+//                   lng = user.lng;
 
-                  if (!isGetData && lng != -1) {
-                    _locationController.text = "${user.lat}, ${user.lng}";
+ //                 if (!isGetData && lng != -1) {
+                  if (!isGetData) {
+
+                    //                   _locationController.text = "${user.lat}, ${user.lng}";
                     isGetData = true;
                   }
 
@@ -92,7 +94,7 @@ class _EditProfileState extends State<EditProfile> {
                                       : Icon(
                                           Icons.person,
                                           size: 52,
-                                          color: Theme.of(context).accentColor,
+                                          color: Theme.of(context).colorScheme.secondary,
                                         ),
                               radius: 50,
                               backgroundColor: const Color(0xFFF0F4F8),
@@ -124,13 +126,13 @@ class _EditProfileState extends State<EditProfile> {
                           textInputAction: TextInputAction.next,
                           style: TextStyle(
                             fontSize: 18,
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                           decoration: customInputForm
                               .copyWith(
                                 prefixIcon: Icon(
                                   Icons.person_outline,
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).colorScheme.secondary,
                                 ),
                               )
                               .copyWith(
@@ -146,13 +148,13 @@ class _EditProfileState extends State<EditProfile> {
                           textInputAction: TextInputAction.next,
                           style: TextStyle(
                             fontSize: 18,
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                           decoration: customInputForm
                               .copyWith(
                                 prefixIcon: Icon(
                                   Icons.location_city_outlined,
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).colorScheme.secondary,
                                 ),
                               )
                               .copyWith(
@@ -169,55 +171,55 @@ class _EditProfileState extends State<EditProfile> {
                           textInputAction: TextInputAction.done,
                           style: TextStyle(
                             fontSize: 18,
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                           decoration: customInputForm
                               .copyWith(
                                 prefixIcon: Icon(
                                   Icons.phone_outlined,
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).colorScheme.secondary,
                                 ),
                               )
                               .copyWith(
                                   hintText: AppLocalization.of(context)!
                                       .translate("Phone Number")),
                         ),
-                        FutureBuilder<UserModel?>(
-                            future: UserProfile.shared.getUser(),
-                            builder: (context, snapshot) {
-                              return Visibility(
-                                visible: snapshot.hasData
-                                    ? snapshot.data!.userType ==
-                                        UserType.TECHNICIAN
-                                    : false,
-                                child: Column(
-                                  children: [
-                                    const SizedBox(height: 20),
-                                    TextFormField(
-                                      controller: _locationController,
-                                      onTap: () => _openMap(context),
-                                      readOnly: true,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Theme.of(context).accentColor,
-                                      ),
-                                      decoration: customInputForm
-                                          .copyWith(
-                                            prefixIcon: Icon(
-                                              Icons.map_outlined,
-                                              color:
-                                                  Theme.of(context).accentColor,
-                                            ),
-                                          )
-                                          .copyWith(
-                                              hintText:
-                                                  AppLocalization.of(context)!
-                                                      .translate("Location")),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }),
+//                        FutureBuilder<UserModel?>(
+//                             future: UserProfile.shared.getUser(),
+//                             builder: (context, snapshot) {
+//                               return Visibility(
+//                                 visible: snapshot.hasData
+//                                     ? snapshot.data!.userType ==
+//                                         UserType.TECHNICIAN
+//                                     : false,
+//                                 child: Column(
+//                                   children: [
+//                                     const SizedBox(height: 20),
+//                                     TextFormField(
+//                                       controller: _locationController,
+//                                       onTap: () => _openMap(context),
+//                                       readOnly: true,
+//                                       style: TextStyle(
+//                                         fontSize: 18,
+//                                         color: Theme.of(context).colorScheme.secondary,
+//                                       ),
+//                                       decoration: customInputForm
+//                                           .copyWith(
+//                                             prefixIcon: Icon(
+//                                               Icons.map_outlined,
+//                                               color:
+//                                                   Theme.of(context).colorScheme.secondary,
+//                                             ),
+//                                           )
+//                                           .copyWith(
+//                                               hintText:
+//                                                   AppLocalization.of(context)!
+//                                                       .translate("Location")),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               );
+//                             }),
                         SizedBox(
                             height: MediaQuery.of(context).size.height *
                                 (100 / 812)),
@@ -297,8 +299,8 @@ class _EditProfileState extends State<EditProfile> {
           image: image,
           name: name!,
           city: city!,
-          phoneNumber: phone!,
-          location: _locationController.text);
+          phoneNumber: phone!);
+ //         location: _locationController.text);
     } else {
       _scaffoldKey.showTosta(
           message: AppLocalization.of(context)!
@@ -307,22 +309,22 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  _openMap(context) async {
-    LatLng? selectedPosition;
-
-    var tempLatLng = _locationController.text.split(", ");
-
-    if (tempLatLng.length == 2) {
-      selectedPosition =
-          LatLng(double.parse(tempLatLng.first), double.parse(tempLatLng.last));
-    }
-
-    LatLng position = await Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) => SelectLocation(
-              position: selectedPosition,
-            )));
-    _locationController.text = "${position.latitude}, ${position.longitude}";
-    lat = position.latitude;
-    lng = position.longitude;
-  }
+//  _openMap(context) async {
+//     LatLng? selectedPosition;
+//
+//     var tempLatLng = _locationController.text.split(", ");
+//
+//     if (tempLatLng.length == 2) {
+//       selectedPosition =
+//           LatLng(double.parse(tempLatLng.first), double.parse(tempLatLng.last));
+//     }
+//
+//     LatLng position = await Navigator.of(context).push(MaterialPageRoute(
+//         builder: (BuildContext context) => SelectLocation(
+//               position: selectedPosition,
+//             )));
+//     _locationController.text = "${position.latitude}, ${position.longitude}";
+//     lat = position.latitude;
+//     lng = position.longitude;
+//   }
 }

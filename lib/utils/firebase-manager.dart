@@ -15,7 +15,6 @@ import 'package:maintenance/model/service-model.dart';
 import 'package:maintenance/model/user-model.dart';
 import 'package:maintenance/utils/extensions.dart';
 import 'package:maintenance/utils/user_profile.dart';
-import 'package:maintenance/widgets/alert.dart';
 import 'package:maintenance/widgets/loader.dart';
 import 'package:uuid/uuid.dart';
 
@@ -82,7 +81,7 @@ class FirebaseManager {
 
     String imgUrl = "";
 
-    if (imagePath != null && imagePath != "") {
+    if (imagePath != "") {
       await _uploadImage(folderName: "user", imagePath: imagePath);
     }
 
@@ -97,14 +96,14 @@ class FirebaseManager {
         "email": email,
         "city": city,
         "balance": 0,
-        "lat": -1,
-        "lng": -1,
+//        "lat": -1,
+//         "lng": -1,
         "status-account": 1,
         "type-user": userType.index,
         "uid": userId,
       }).then((value) async {
         showLoaderDialog(scaffoldKey.currentContext, isShowLoader: false);
-        this.addNotifications(
+        addNotifications(
             uidUser: userId,
             titleEN: "Welcome",
             titleAR: "مرحبا بك",
@@ -222,11 +221,11 @@ class FirebaseManager {
     required String name,
     required String city,
     required String phoneNumber,
-    required String location,
+//    required String location,
   }) async {
     showLoaderDialog(scaffoldKey.currentContext);
 
-    String imageURL = "";
+    String? imageURL = "";
 
     if (image != "") {
       if (image.isURL()) {
@@ -236,34 +235,34 @@ class FirebaseManager {
       }
     }
 
-    double lat;
-    double lng;
+//    double lat;
+//     double lng;
 
-    var tempLatLng = location.split(", ");
+ //   var tempLatLng = location.split(", ");
 
-    if (tempLatLng.length == 2) {
-      lat = double.parse(tempLatLng.first);
-      lng = double.parse(tempLatLng.last);
-    } else {
-      lat = -1;
-      lng = -1;
-    }
+//    if (tempLatLng.length == 2) {
+//       lat = double.parse(tempLatLng.first);
+//       lng = double.parse(tempLatLng.last);
+//     } else {
+//       lat = -1;
+//       lng = -1;
+//     }
 
     userRef.doc(auth.currentUser!.uid).update({
       "image": imageURL,
       "name": name,
       "phone": phoneNumber,
       "city": city,
-      "lat": lat,
-      "lng": lng,
+//      "lat": lat,
+//       "lng": lng,
     }).then((value) async {
       showLoaderDialog(scaffoldKey.currentContext, isShowLoader: false);
       UserModel? user = await UserProfile.shared.getUser();
-      user!.image = imageURL;
+      user!.image = imageURL!;
       user.name = name;
       user.city = city;
-      user.lat = lat;
-      user.lng = lng;
+//      user.lat = lat;
+//       user.lng = lng;
       user.phone = phoneNumber;
       UserProfile.shared.setUser(user: user);
       Navigator.of(scaffoldKey.currentContext!).pop();
@@ -615,7 +614,7 @@ class FirebaseManager {
     }
   }
 
-   forgotPassword(
+  forgotPassword(
       {required GlobalKey<ScaffoldState> scaffoldKey,
       required String email}) async {
     showLoaderDialog(scaffoldKey.currentContext);
@@ -648,7 +647,8 @@ class FirebaseManager {
     if (!image.isURL()) {
       String uid = adsRef.doc().id;
       showLoaderDialog(context);
-      String imageUrl = await _uploadImage(folderName: "ads", imagePath: image);
+      String? imageUrl =
+          await _uploadImage(folderName: "ads", imagePath: image);
       adsRef.doc(uid).set({
         "image": imageUrl,
         "createdDate": DateTime.now().toString(),
@@ -683,8 +683,7 @@ class FirebaseManager {
 
   addOrEditService(
     context, {
-        String uid = "",
-    required GlobalKey<ScaffoldState> scaffoldKey,
+    String? uid = "",
     required List<String> images,
     required String titleEN,
     required String detailsEN,
@@ -693,6 +692,7 @@ class FirebaseManager {
   }) async {
     showLoaderDialog(context);
 
+    // String tempUid = (uid == "") ? serviceRef.doc().id : uid;
     String tempUid = (uid == null || uid == "") ? serviceRef.doc().id : uid;
 
     List<String> imagesUrl = [];
@@ -701,7 +701,7 @@ class FirebaseManager {
       if (image.isURL()) {
         imagesUrl.add(image);
       } else {
-        String urlImage =
+        String? urlImage =
             await _uploadImage(folderName: "service", imagePath: image);
         imagesUrl.add(urlImage);
       }
@@ -769,7 +769,7 @@ class FirebaseManager {
           break;
       }
 
-      this.addNotifications(
+      addNotifications(
           uidUser: service.uidOwner,
           titleEN: titleEN,
           titleAR: titleAR,
@@ -807,7 +807,6 @@ class FirebaseManager {
     });
   }
 
-
   Stream<List<ServiceModel>> getMyServices() {
     return serviceRef
         .where("uid-owner", isEqualTo: auth.currentUser!.uid)
@@ -832,27 +831,26 @@ class FirebaseManager {
   addOrEditOrder(
     context, {
     String uid = "",
-     required GlobalKey<ScaffoldState> scaffoldKey,
-
-        //   required File image,
- //   required double lat,
-//    required double lng,
+//    required File image,
+//     required double lat,
+//     required double lng,
     required String ownerId,
     required String serviceId,
     required String details,
   }) async {
     showLoaderDialog(context);
 
-//    String urlImage = "";
-//
-//       if (image != null) {
-//         urlImage =
-//             await _uploadImage(folderName: "orders", imagePath: image.path);
-//       }
+ //   String urlImage = "";
 
+//    if (image != null) {
+//       urlImage =
+//           await _uploadImage(folderName: "orders", imagePath: image.path);
+//     }
+
+    //   String tempUid = (uid == "") ? orderRef.doc().id : uid;
     String tempUid = (uid == null || uid == "") ? orderRef.doc().id : uid;
 
-    this.addNotifications(
+    addNotifications(
         uidUser: ownerId,
         titleEN: "Service Request",
         titleAR: "طلب خدمة",
@@ -863,10 +861,10 @@ class FirebaseManager {
       "user-id": auth.currentUser!.uid,
       "service-id": serviceId,
       "owner-id": ownerId,
- //     "url-image": urlImage,
       "details": details,
- //     "lat": lat == null ? 0 : lat,
-  //    "lng": lng == null ? 0 : lng,
+//      "url-image": urlImage,
+//       "lat": lat == null ? 0 : lat,
+//       "lng": lng == null ? 0 : lng,
       "createdDate": DateTime.now().toString(),
       "status": Status.PENDING.index,
       "message-en": "",
@@ -1010,8 +1008,7 @@ class FirebaseManager {
 
   // TODO:- Start Wallet
 
-  updateWalletToUser(context,
-      {required String uid, required double balance}) {
+  updateWalletToUser(context, {required String uid, required double balance}) {
     showLoaderDialog(context);
 
     userRef.doc(uid).update({
@@ -1037,7 +1034,7 @@ class FirebaseManager {
     String image = "",
   }) async {
     String uid = chatRef.doc().id;
-    String imageUrl = "";
+    String? imageUrl = "";
 
     if (image != "") {
       showLoaderDialog(context);

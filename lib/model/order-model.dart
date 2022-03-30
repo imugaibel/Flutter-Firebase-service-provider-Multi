@@ -1,5 +1,5 @@
 // To parse this JSON data, do
-//
+
 //     final orderModel = orderModelFromJson(jsonString);
 
 import 'dart:convert';
@@ -16,23 +16,24 @@ class OrderModel {
     required this.userId,
     required this.serviceId,
     required this.ownerId,
- //   required this.urlImage,
     required this.details,
     required this.createdDate,
     required this.status,
     required this.messageEN,
     required this.messageAR,
     required this.uid,
- //    required this.lat,
- //    required this.lng,
+//    required this.urlImage,
+//     required this.lat,
+//     required this.lng,
   });
 
   String userId;
   String serviceId;
   String ownerId;
+
 //  double lat;
- // double lng;
- // String urlImage;
+//   double lng;
+//   String urlImage;
   String details;
   String createdDate;
   Status status;
@@ -44,14 +45,14 @@ class OrderModel {
         userId: json!["user-id"],
         serviceId: json["service-id"],
         ownerId: json["owner-id"],
- //       urlImage: json["url-image"],
         details: json["details"],
         createdDate: json["createdDate"],
         status: Status.values[json["status"]],
         messageEN: json["message-en"],
         messageAR: json["message-ar"],
- //       lat: json["lat"].toDouble(),
-  //      lng: json["lng"].toDouble(),
+//     urlImage: json["url-image"],
+//     lat: json["lat"].toDouble(),
+//      lng: json["lng"].toDouble(),
         uid: json["uid"],
       );
 
@@ -59,9 +60,9 @@ class OrderModel {
         "user-id": userId,
         "service-id": serviceId,
         "owner-id": ownerId,
- //       "lat": lat,
-  //      "lng": lng,
-  //      "url-image": urlImage,
+//        "lat": lat,
+//         "lng": lng,
+//         "url-image": urlImage,
         "details": details,
         "createdDate": createdDate,
         "status": status.index,

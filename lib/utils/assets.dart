@@ -1,5 +1,5 @@
-final String IMAGE_PATH_FOLDER = 'assets/images/';
-final String IMAGE_PATH_FOLDER_ICON = '${ IMAGE_PATH_FOLDER }icons/';
+const String IMAGE_PATH_FOLDER = 'assets/images/';
+const String IMAGE_PATH_FOLDER_ICON = '${ IMAGE_PATH_FOLDER }icons/';
 
 class Assets {
 

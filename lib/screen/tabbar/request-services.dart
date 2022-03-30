@@ -47,7 +47,7 @@ class _RequestServicesState extends State<RequestServices> {
           title:
               Text(AppLocalization.of(context)!.translate("Request Service")),
           centerTitle: true,
-          actions: [
+          actions: const [
             NotificationsWidget(),
           ],
         ),
@@ -190,7 +190,7 @@ class _RequestServicesState extends State<RequestServices> {
                                   user.name,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Theme.of(context).accentColor,
+                                    color: Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                               ],
@@ -227,7 +227,7 @@ class _RequestServicesState extends State<RequestServices> {
                             Text(user.phone,
                                 style: TextStyle(
                                     fontSize: 16,
-                                    color: Theme.of(context).accentColor)),
+                                    color: Theme.of(context).colorScheme.secondary)),
                           ],
                         ),
                         const SizedBox(height: 15),
@@ -254,7 +254,7 @@ class _RequestServicesState extends State<RequestServices> {
                                       style: TextStyle(
                                           fontSize: 16,
                                           color:
-                                              Theme.of(context).accentColor));
+                                              Theme.of(context).colorScheme.secondary));
                                 }),
                           ],
                         ),
@@ -273,7 +273,7 @@ class _RequestServicesState extends State<RequestServices> {
                                   format: "yyyy-MM-dd - h:mm a"),
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: Theme.of(context).accentColor),
+                                  color: Theme.of(context).colorScheme.secondary),
                             ),
                           ],
                         ),
@@ -297,7 +297,7 @@ class _RequestServicesState extends State<RequestServices> {
                                           ? item.messageAR: item.messageEN,
                                       style: TextStyle(
                                           fontSize: 16,
-                                          color: Theme.of(context).accentColor)),
+                                          color: Theme.of(context).colorScheme.secondary)),
                                 ],
                               ),
                             ],
@@ -323,7 +323,7 @@ class _RequestServicesState extends State<RequestServices> {
                                           ? item.messageAR: item.messageEN,
                                       style: TextStyle(
                                           fontSize: 16,
-                                          color: Theme.of(context).accentColor)),
+                                          color: Theme.of(context).colorScheme.secondary)),
                                 ],
                               ),
                             ],
@@ -447,7 +447,7 @@ class _RequestServicesState extends State<RequestServices> {
                                   statusTitle,
                                   style: TextStyle(
                                       fontSize: 16,
-                                      color: Theme.of(context).accentColor),
+                                      color: Theme.of(context).colorScheme.secondary),
                                 ),
                               ],
                             ),

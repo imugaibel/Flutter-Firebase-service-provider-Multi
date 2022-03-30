@@ -46,12 +46,12 @@ class UserModel {
     email: json["email"],
     city: json["city"],
     uid: json["uid"],
-    balance: (json["balance"] != null ? json["balance"] : 0) * 1.0,
-    lat: (json["lat"] != null ? json["lat"] : -1) * 1.0,
-    lng: (json["lng"] != null ? json["lng"] : -1) * 1.0,
+    balance: (json["balance"] ?? 0) * 1.0,
+    lat: (json["lat"] ?? -1) * 1.0,
+    lng: (json["lng"] ?? -1) * 1.0,
     accountStatus: Status.values[json["status-account"]],
     userType: UserType.values[json["type-user"]],
-    dateCreated: json["date-created"] == null ? DateTime.now().toString() : json["date-created"],
+    dateCreated: json["date-created"] ?? DateTime.now().toString(),
   );
 
   Map<String, dynamic> toJson() => {

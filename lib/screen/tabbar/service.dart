@@ -42,12 +42,10 @@ class _ServiceState extends State<Service> {
   Widget build(BuildContext context) {
     return FutureBuilder<UserModel?>(
         key: _scaffoldKey,
-
         future: UserProfile.shared.getUser(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             UserModel? user = snapshot.data;
-
             return Scaffold(
               appBar: AppBar(
                 title: Text(AppLocalization.of(context)!.translate("Services")),
@@ -244,7 +242,7 @@ class _ServiceState extends State<Service> {
                                         style: TextStyle(
                                             fontSize: 16, color: Theme
                                             .of(context)
-                                            .accentColor)),
+                                            .colorScheme.secondary)),
                                   ],
                                 ),
                                 const SizedBox(height: 15),
@@ -260,7 +258,7 @@ class _ServiceState extends State<Service> {
                                         .changeDateFormat(), style: TextStyle(
                                         fontSize: 16, color: Theme
                                         .of(context)
-                                        .accentColor),),
+                                        .colorScheme.secondary),),
                                   ],
                                 ),
                                 Visibility(
@@ -284,7 +282,7 @@ class _ServiceState extends State<Service> {
                                               style: TextStyle(
                                                   fontSize: 16, color: Theme
                                                   .of(context)
-                                                  .accentColor)),
+                                                  .colorScheme.secondary)),
                                         ],
                                       ),
                                     ],
@@ -317,7 +315,7 @@ class _ServiceState extends State<Service> {
                                           style: TextStyle(
                                               fontSize: 16, color: Theme
                                               .of(context)
-                                              .accentColor),),
+                                              .colorScheme.secondary),),
                                       ],
                                     ),
                                   ),

@@ -32,7 +32,7 @@ class _SignInState extends State<SignIn> {
     // TODO: implement initState
     super.initState();
     if (widget.message != null) {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () {
         showAlertDialog(context, title: AppLocalization.of(context)!.translate("Done Successfully"), message: AppLocalization.of(context)!.translate(widget.message), showBtnOne: false, actionBtnTwo: () {
           Navigator.of(context).pop();
         });

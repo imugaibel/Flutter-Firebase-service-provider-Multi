@@ -51,7 +51,7 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         title: Text(AppLocalization.of(context)!.translate("Profile")),
         centerTitle: true,
-        actions: [
+        actions: const [
           NotificationsWidget(),
         ],
       ),
@@ -79,7 +79,7 @@ class _ProfileState extends State<Profile> {
                               : Icon(
                                   Icons.person,
                                   size: 52,
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).colorScheme.secondary,
                                 ),
                           radius: 50,
                           backgroundColor: const Color(0xFFF0F4F8),

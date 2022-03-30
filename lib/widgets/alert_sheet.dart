@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../main.dart';
 
 alertSheet(context, { String title = "", required List<String> items, required onTap(value) }) {
 
@@ -14,7 +13,7 @@ alertSheet(context, { String title = "", required List<String> items, required o
           child: FlatButton(
             child: Text(value,
               style:
-              TextStyle(color: Theme.of(context).accentColor, fontSize: 18),
+              TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 18),
             ),
             onPressed: () {
               onTap(value);
@@ -32,7 +31,7 @@ alertSheet(context, { String title = "", required List<String> items, required o
       minWidth: MediaQuery.of(context).size.width,
       child: Text('Cancel',
         style:
-        TextStyle(color: Theme.of(context).accentColor, fontSize: 18),),
+        TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 18),),
       onPressed: () {
         Navigator.of(context).pop();
       },

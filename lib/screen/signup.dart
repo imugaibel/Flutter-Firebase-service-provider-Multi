@@ -203,7 +203,7 @@ class _SignupState extends State<Signup> {
 
 
   bool validation() {
-    return !(username.isEmpty || email.isEmpty || password.isEmpty || city.isEmpty || phoneNumber.isEmpty || userType == null);
+    return !(username.isEmpty || email.isEmpty || password.isEmpty || city.isEmpty || phoneNumber.isEmpty);
   }
 
   _btnSignup() {

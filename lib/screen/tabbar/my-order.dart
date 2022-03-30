@@ -45,7 +45,7 @@ class _MyOrderState extends State<MyOrder> {
       appBar: AppBar(
         title: Text(AppLocalization.of(context)!.translate("My Order")),
         centerTitle: true,
-        actions: [
+        actions: const [
           NotificationsWidget(),
         ],
       ),
@@ -173,7 +173,7 @@ class _MyOrderState extends State<MyOrder> {
                               return Text(serviceName,
                                   style: TextStyle(
                                       fontSize: 16,
-                                      color: Theme.of(context).accentColor));
+                                      color: Theme.of(context).colorScheme.secondary));
                             }),
                       ],
                     ),
@@ -219,7 +219,7 @@ class _MyOrderState extends State<MyOrder> {
                                     snapshot.hasData ? snapshot.data!.name : "",
                                     style: TextStyle(
                                         fontSize: 16,
-                                        color: Theme.of(context).accentColor),
+                                        color: Theme.of(context).colorScheme.secondary),
                                   ),
                                 ],
                               ),
@@ -242,7 +242,7 @@ class _MyOrderState extends State<MyOrder> {
                                     snapshot.hasData ? snapshot.data!.phone : "",
                                     style: TextStyle(
                                         fontSize: 16,
-                                        color: Theme.of(context).accentColor),
+                                        color: Theme.of(context).colorScheme.secondary),
                                   ),
                                 ],
                               ),
@@ -263,7 +263,7 @@ class _MyOrderState extends State<MyOrder> {
                     Text(order.details,
                         style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context).accentColor)),
+                            color: Theme.of(context).colorScheme.secondary)),
                   ],
                 ),
                 Visibility(
@@ -286,7 +286,7 @@ class _MyOrderState extends State<MyOrder> {
                                   ? order.messageAR: order.messageEN,
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: Theme.of(context).accentColor)),
+                                  color: Theme.of(context).colorScheme.secondary)),
                         ],
                       ),
                     ],
@@ -312,7 +312,7 @@ class _MyOrderState extends State<MyOrder> {
                                   ? order.messageAR: order.messageEN,
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: Theme.of(context).accentColor)),
+                                  color: Theme.of(context).colorScheme.secondary)),
                         ],
                       ),
                     ],
@@ -330,7 +330,7 @@ class _MyOrderState extends State<MyOrder> {
                     Text(
                       order.createdDate.changeDateFormat(),
                       style: TextStyle(
-                          fontSize: 16, color: Theme.of(context).accentColor),
+                          fontSize: 16, color: Theme.of(context).colorScheme.secondary),
                     ),
                   ],
                 ),
@@ -387,7 +387,7 @@ class _MyOrderState extends State<MyOrder> {
                           statusTitle,
                           style: TextStyle(
                               fontSize: 16,
-                              color: Theme.of(context).accentColor),
+                              color: Theme.of(context).colorScheme.secondary),
                         ),
                       ],
                     ),
